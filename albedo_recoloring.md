@@ -5,6 +5,11 @@ Select a new albedo color to see the effect in real time.
 label {
     margin-right: 20px;
 }
+#imgCanvas {
+   width: 100%;
+   height: 100%;
+   display: block;
+}
 </style>
 
 <canvas id="imgCanvas"></canvas>
