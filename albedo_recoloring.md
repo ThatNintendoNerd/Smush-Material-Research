@@ -26,17 +26,22 @@ label {
 
 <script src="js/three.js"></script>
 <script>
+    // TODO: Most of this can be put in a separate script file to use with other demos.
     const renderer = new THREE.WebGLRenderer({
         canvas: imgCanvas,
         alpha: true
     });
 
-    renderer.setSize(600, 600, false);
+    // Set the renderer dimensions to the max dimension of the html element.
+    // This assumes a 1:1 aspect ratio but improves the output resolution.
+    const updateRenderHeight = function() {
+        const maxDimension = Math.max(renderer.domElement.clientWidth, renderer.domElement.clientHeight);
+        renderer.setSize(maxDimension, maxDimension, false);
+    };
 
+    updateRenderHeight();
     window.addEventListener('resize', function (e) {
-
-        renderer.setSize(600, 600, false);
-
+        updateRenderHeight();
     });
 
     const scene = new THREE.Scene();
