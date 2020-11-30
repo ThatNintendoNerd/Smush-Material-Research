@@ -95,14 +95,18 @@ Base Render
 <script src="js/texturescene.js"></script>
 
 <script>
-    const texture = new THREE.TextureLoader().load("images/albedo_recoloring/corrin.png");
-    const mask = new THREE.TextureLoader().load("images/albedo_recoloring/mask.png");
+    const manager = new THREE.LoadingManager();
 
-    const albedoColorInput = document.getElementById("albedo");
-    const newAlbedoColorInput = document.getElementById("newAlbedo");
+    const texture = new THREE.TextureLoader(manager).load("images/albedo_recoloring/corrin.png");
+    const mask = new THREE.TextureLoader(manager).load("images/albedo_recoloring/mask.png");
 
-    const material = new THREE.ShaderMaterial({
-        vertexShader: `
+    // Use a loading manager to render the first frame once all textures are loaded.
+    manager.onLoad = function () {        
+        const albedoColorInput = document.getElementById("albedo");
+        const newAlbedoColorInput = document.getElementById("newAlbedo");
+
+        const material = new THREE.ShaderMaterial({
+            vertexShader: `
     varying vec2 vUv;
     
     void main() {
@@ -110,7 +114,7 @@ Base Render
         gl_Position = vec4( position, 1.0 );    
     }
     `,
-        fragmentShader: `
+            fragmentShader: `
     varying vec2 vUv;
 
     uniform sampler2D image;
@@ -133,33 +137,40 @@ Base Render
         gl_FragColor.a = renderColor.a;
     }
     `,
-        uniforms: {
-            image: { value: texture },
-            mask: { value: mask },
-            albedo: { value: new THREE.Color(albedoColorInput.value) },
-            newAlbedo: { value: new THREE.Color(newAlbedoColorInput.value) }
-        }
-    });
+            uniforms: {
+                image: { value: texture },
+                mask: { value: mask },
+                albedo: { value: new THREE.Color(albedoColorInput.value) },
+                newAlbedo: { value: new THREE.Color(newAlbedoColorInput.value) }
+            }
+        });
 
-    // Update the uniforms when changing colors.
-    albedoColorInput.addEventListener("input", function () { material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value); }, false);
-    newAlbedoColorInput.addEventListener("input", function () { material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value); }, false);
+        const textureScene = new TextureScene(material, imgCanvas);
 
-    document.getElementById("reset").addEventListener("click", function () {
-        // Reset the inputs to the original albedo color.
-        albedoColorInput.value = "#B0AFA9";
-        material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
+        window.addEventListener('resize', textureScene.render());
 
-        newAlbedoColorInput.value = "#B0AFA9";
-        material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
-    });
+        // Update the uniforms when changing colors.
+        albedoColorInput.addEventListener("input", function () {
+            material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
+            textureScene.render();
+        }, false);
 
-    const textureScene = new TextureScene(material, imgCanvas);
+        newAlbedoColorInput.addEventListener("input", function () {
+            material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
+            textureScene.render();
+        }, false);
 
-    const animate = function () { 
-        textureScene.render(); 
-        requestAnimationFrame(animate);
+        document.getElementById("reset").addEventListener("click", function () {
+            // Reset the inputs to the original albedo color.
+            albedoColorInput.value = "#B0AFA9";
+            material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
+
+            newAlbedoColorInput.value = "#B0AFA9";
+            material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
+
+            textureScene.render();
+        });
+
+        textureScene.render();
     };
-    animate();
-
 </script>
