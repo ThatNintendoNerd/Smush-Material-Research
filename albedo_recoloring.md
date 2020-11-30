@@ -7,6 +7,12 @@ Select a new albedo color to see the effect in real time.
 <style>
 label {
     margin-right: 20px;
+    margin-top: 0;
+    vertical-align: middle;
+}
+button {
+    margin-top: 0;
+    vertical-align: middle;
 }
 #imgCanvas {
    width: 100%;
@@ -16,22 +22,19 @@ label {
 </style>
 
 <canvas id="imgCanvas"></canvas>
-<form>
-    <label for="albedo">
-        Previous Albedo
-        <input type="color" id="albedo" name="albedo" value="#B0AFA9">
-    </label>
-    <label for="newAlbedo">
-        New Albedo
-        <input type="color" id="newAlbedo" name="newAlbedo" value="#B0AFA9">
-    </label>
-</form>
+<label for="albedo">
+    Previous Albedo
+    <input type="color" id="albedo" name="albedo" value="#B0AFA9">
+</label>
+<label for="newAlbedo">
+    New Albedo
+    <input type="color" id="newAlbedo" name="newAlbedo" value="#B0AFA9">
+</label>
+<button id="reset">Reset</button>
 
 # Details
 This technique approximates well how fully metallic objects are rendered in game (PRM red channel is 1.0) because metallic objects have no diffuse component.
 Non metallic objects would require extracting the specular and diffuse lighting separately.
-For custom renders, there are more render passes available that can perfectly recreate the final render. Remember to composite AOVs in 32 bit floating point for proper blending and to avoid clipping!
-See Blender's [AOV Documentation](https://docs.blender.org/manual/en/latest/render/layers/passes.html#render-cycles-passes-aov) for details.
 
 ```c
 // Metals 
@@ -46,6 +49,10 @@ recolored = lighting * new_albedo
 
 // TODO: Recoloring Non Metals
 ```
+
+For custom renders, there are more render passes available that can perfectly recreate the final render. Remember to composite AOVs in 32 bit floating point for proper blending and to avoid clipping!
+See Blender's <a href="https://docs.blender.org/manual/en/latest/render/layers/passes.html#combining" target="_blank">AOV Documentation</a>
+for details.
 
 # Albedo Recoloring in an Image Editor
 The layers should be arranged as follows from top to bottom. This assumes the render is already divided into parts or layer groups with masks.
@@ -148,6 +155,15 @@ Base Render
     // Update the uniforms when changing colors.
     albedoColorInput.addEventListener("input", function () { material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value); }, false);
     newAlbedoColorInput.addEventListener("input", function () { material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value); }, false);
+
+    document.getElementById("reset").addEventListener("click", function () {
+        // Reset the inputs to the original albedo color.
+        albedoColorInput.value = "#B0AFA9";
+        material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
+
+        newAlbedoColorInput.value = "#B0AFA9";
+        material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
+    });
 
     const quad = new THREE.Mesh(new THREE.PlaneBufferGeometry(2, 2, 1, 1), material);
     scene.add(quad);
