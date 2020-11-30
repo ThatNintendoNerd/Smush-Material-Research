@@ -8,9 +8,9 @@ class TextureScene {
             alpha: true
         });
     
-        this.updateRenderHeight();
+        this.updateRenderDimensions();
         window.addEventListener('resize', function (e) {
-            this.updateRenderHeight();
+            this.updateRenderDimensions();
         });
     
         this.scene = new THREE.Scene();
@@ -28,8 +28,11 @@ class TextureScene {
      * Set the renderer dimensions to the max dimension of the canvas.
      * This assumes a 1:1 aspect ratio but improves the output resolution.
      */
-    updateRenderHeight() {
+    updateRenderDimensions() {
         const maxDimension = Math.max(this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight);
+
+        // Set the pixel ratio to set the correct resolution for high PPI displays.
+        this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setSize(maxDimension, maxDimension, false);
     };
 }
