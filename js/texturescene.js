@@ -1,3 +1,5 @@
+import * as THREE from "./three.module.js"
+
 /**
  * Stores the state necessary for drawing a textured quad.
  */
@@ -7,7 +9,6 @@ class TextureScene {
             canvas: canvas,
             alpha: true
         });
-    
         this.updateRenderDimensions();
 
         const textureScene = this;
@@ -38,3 +39,5 @@ class TextureScene {
         this.renderer.setSize(maxDimension, maxDimension, false);
     };
 }
+
+export { TextureScene };

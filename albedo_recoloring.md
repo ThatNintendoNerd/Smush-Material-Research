@@ -91,86 +91,12 @@ New Albedo (Multiply)
 Base Render
 ```
 
-<script src="js/three.js"></script>
-<script src="js/texturescene.js"></script>
+<script type="module">
+    import { AlbedoRecoloringDemo } from "./js/albedorecoloring.js";
 
-<script>
-    const manager = new THREE.LoadingManager();
+    const albedoColorInput = document.getElementById("albedo");
+    const newAlbedoColorInput = document.getElementById("newAlbedo");
+    const resetButton = document.getElementById("reset");
 
-    const texture = new THREE.TextureLoader(manager).load("images/albedo_recoloring/corrin.png");
-    const mask = new THREE.TextureLoader(manager).load("images/albedo_recoloring/mask.png");
-
-    // Use a loading manager to render the first frame once all textures are loaded.
-    manager.onLoad = function () {        
-        const albedoColorInput = document.getElementById("albedo");
-        const newAlbedoColorInput = document.getElementById("newAlbedo");
-
-        const material = new THREE.ShaderMaterial({
-            vertexShader: `
-    varying vec2 vUv;
-    
-    void main() {
-        vUv = uv;
-        gl_Position = vec4( position, 1.0 );    
-    }
-    `,
-            fragmentShader: `
-    varying vec2 vUv;
-
-    uniform sampler2D image;
-    uniform sampler2D mask;
-
-    uniform vec3 albedo;
-    uniform vec3 newAlbedo;
-
-    void main() {
-        vec4 renderColor = texture(image, vUv);
-        vec4 maskColor = texture(mask, vUv);
-
-        // Clamp albedo to prevent potential divide by 0.
-        vec3 lighting = renderColor.rgb / max(albedo, 0.001);
-        vec3 recolored = lighting * newAlbedo;
-        vec3 composite = mix(renderColor.rgb, recolored, maskColor.r);
-
-        // Premultiplied alpha.
-        gl_FragColor.rgb = composite * renderColor.a;
-        gl_FragColor.a = renderColor.a;
-    }
-    `,
-            uniforms: {
-                image: { value: texture },
-                mask: { value: mask },
-                albedo: { value: new THREE.Color(albedoColorInput.value) },
-                newAlbedo: { value: new THREE.Color(newAlbedoColorInput.value) }
-            }
-        });
-
-        const textureScene = new TextureScene(material, imgCanvas);
-
-        window.addEventListener('resize', textureScene.render());
-
-        // Update the uniforms when changing colors.
-        albedoColorInput.addEventListener("input", function () {
-            material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
-            textureScene.render();
-        }, false);
-
-        newAlbedoColorInput.addEventListener("input", function () {
-            material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
-            textureScene.render();
-        }, false);
-
-        document.getElementById("reset").addEventListener("click", function () {
-            // Reset the inputs to the original albedo color.
-            albedoColorInput.value = "#B0AFA9";
-            material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
-
-            newAlbedoColorInput.value = "#B0AFA9";
-            material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
-
-            textureScene.render();
-        });
-
-        textureScene.render();
-    };
+    const demo = new AlbedoRecoloringDemo(window, albedoColorInput, newAlbedoColorInput, resetButton);
 </script>

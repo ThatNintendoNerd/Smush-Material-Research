@@ -14,4 +14,4 @@ Realtime demos that run in the browser using WebGL. These should work on most co
 Report any bugs in [issues](https://github.com/ScanMountGoat/Smush-Material-Research/issues) if one of the links is broken or a page isn't rendering correctly.
 
 ## Credits
-- [three.js](https://threejs.org/) - WebGL rendering library
+- <a href="https://threejs.org/" target="_blank">three.js</a> - WebGL rendering library
