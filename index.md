@@ -1,7 +1,14 @@
 ## WebGL Demos
 Realtime demos that run in the browser using WebGL. These should work on most computers, phones, and tablets.  
 
-### [Albedo Recoloring](albedo_recoloring)
+- [Albedo Recoloring](albedo_recoloring)
+
+
+## Tools 
+- <a href="https://github.com/Ploaj/SSBHLib/releases" target="_blank">Cross Mod</a> - Model viewer and material editor
+- <a href="https://github.com/Ploaj/SSBHLib/releases" target="_blank">Mat Lab</a> - CLI tool for editing materials as XML
+- <a href="https://github.com/Ploaj/StudioSB/releases/tag/LatestCommit" target="_blank">Studio SB</a> - create and view model imports
+- <a href="https://github.com/KillzXGaming/Switch-Toolbox" target="_blank">Switch Toolbox</a> - edit BNTX and NUTEXB files
 
 ## Support
 Report any bugs in [issues](https://github.com/ScanMountGoat/Smush-Material-Research/issues) if one of the links is broken or a page isn't rendering correctly.
