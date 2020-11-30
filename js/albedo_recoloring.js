@@ -5,11 +5,12 @@ class AlbedoRecoloringDemo {
     /**
      * 
      * @param {*} window 
+     * @param {*} canvas 
      * @param {*} albedoColorInput 
      * @param {*} newAlbedoColorInput 
      * @param {*} resetButton 
      */
-    constructor(window, albedoColorInput, newAlbedoColorInput, resetButton) {
+    constructor(window, canvas, albedoColorInput, newAlbedoColorInput, resetButton) {
         const manager = new THREE.LoadingManager();
 
         const texture = new THREE.TextureLoader(manager).load("images/albedo_recoloring/corrin.png");
@@ -55,9 +56,7 @@ class AlbedoRecoloringDemo {
                 }
             });
 
-            const textureScene = new TextureScene(material, imgCanvas);
-
-            window.addEventListener('resize', textureScene.render());
+            const textureScene = new TextureScene(window, canvas, material);
 
             // Update the uniforms when changing colors.
             albedoColorInput.addEventListener("input", function () {

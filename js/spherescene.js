@@ -3,25 +3,29 @@ import * as THREE from "./three.module.js"
 /**
  * Stores the state necessary for drawing a textured quad.
  */
-class TextureScene {
+class SphereScene {
     constructor(window, canvas, material) {
         this.renderer = new THREE.WebGLRenderer({
             canvas: canvas,
-            alpha: true
+            alpha: true,
+            antialias: true
         });
         this.updateRenderDimensions(window);
 
-        const textureScene = this;
+        const sphereScene = this;
         window.addEventListener('resize', function () {
-            textureScene.updateRenderDimensions(window);
-            textureScene.render();
+            sphereScene.updateRenderDimensions(window);
+            sphereScene.render();
         });
-    
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-        const quad = new THREE.Mesh(new THREE.PlaneBufferGeometry(2, 2, 1, 1), material);
-        this.scene.add(quad);
+        this.scene = new THREE.Scene();
+        // Assume a 1:1 aspect ratio.
+        this.camera = new THREE.PerspectiveCamera(75, 1.0, 0.1, 1000);
+        this.camera.position.z = 2;
+
+        const geometry = new THREE.SphereGeometry( 1, 32, 32 );
+        const sphere = new THREE.Mesh( geometry, material );
+        this.scene.add( sphere );
     }
 
     render() {
@@ -36,9 +40,10 @@ class TextureScene {
         const maxDimension = Math.max(this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight);
 
         // Set the pixel ratio to set the correct resolution for high PPI displays.
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        // TODO: This doubles the dimensions on every resize?
+        //this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(maxDimension, maxDimension, false);
     };
 }
 
-export { TextureScene };
+export { SphereScene };

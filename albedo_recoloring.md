@@ -92,11 +92,11 @@ Base Render
 ```
 
 <script type="module">
-    import { AlbedoRecoloringDemo } from "./js/albedorecoloring.js";
+    import { AlbedoRecoloringDemo } from "./js/albedo_recoloring.js";
 
     const albedoColorInput = document.getElementById("albedo");
     const newAlbedoColorInput = document.getElementById("newAlbedo");
     const resetButton = document.getElementById("reset");
-
-    const demo = new AlbedoRecoloringDemo(window, albedoColorInput, newAlbedoColorInput, resetButton);
+    const imgCanvas = document.getElementById("imgCanvas");
+    const demo = new AlbedoRecoloringDemo(window, imgCanvas, albedoColorInput, newAlbedoColorInput, resetButton);
 </script>
