@@ -1,8 +1,9 @@
 ---
 # Albedo Recoloring
 Renders can be recolored by extracting the lighting information and then applying a new albedo color.
-The original albedo color for the armor is provided for both inputs, which has no effect on the final color.
-Select a new albedo color to see the effect in real time.
+If the same color is used for the previous and new albedo, the final result is unchanged. 
+The render will accurately match the selected new albedo color without the need for a levels/curves adjustment. 
+This also preserves the color variations in the original lighting unlike automatic recoloring or similar HSL techniques.
 
 <style>
     label {
@@ -21,9 +22,16 @@ Select a new albedo color to see the effect in real time.
         height: 100%;
         display: block;
     }
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
 </style>
 
 <canvas id="imgCanvas"></canvas>
+Select a new albedo color to see the armor on the render update in real time.
+
 <label for="albedo">
     Previous Albedo
     <input type="color" id="albedo" name="albedo" value="#B0AFA9">
@@ -36,8 +44,11 @@ Select a new albedo color to see the effect in real time.
 
 # Details
 This technique approximates well how fully metallic objects are rendered in game (PRM red channel is 1.0) because
-metallic objects have no diffuse component.
-Non metallic objects would require extracting the specular and diffuse lighting separately.
+metallic objects have no diffuse component. The results for non metallic materials still match the desired albedo consistently, 
+but there may be discolorations. Potential fixes will are discussed in the image editing section.
+
+The albedo values can be copied from the col maps for non skin materials. For skin materials, copy paste the values from Cross Mod's albedo rendering mode 
+by taking a screenshot or using a screen color picker. This takes into account the fake subsurface scattering effect applied in game.
 
 ```c
 // Metals
@@ -50,46 +61,50 @@ final = (albedo x diffuse_light) + (specular_light)
 lighting = final / col_rgb
 recolored = lighting * new_albedo
 
-// TODO: Recoloring Non Metals
-```
+// Recoloring Non Metals
+lighting = final / previous_albedo 
+recolored = lighting * new_albedo 
 
-For custom renders, there are more render passes available that can perfectly recreate the final render. Remember to
-composite AOVs in 32 bit floating point for proper blending and to avoid clipping!
-See Blender's <a href="https://docs.blender.org/manual/en/latest/render/layers/passes.html#combining"
-    target="_blank">AOV Documentation</a>
-for details.
+```
 
 # Albedo Recoloring in an Image Editor
-The layers should be arranged as follows from top to bottom. This assumes the render is already divided into parts or
-layer groups with masks.
-The new and previous albedo colors can be copied from the col map for non skin materials.
+<img src="{{ site.url }}/images/albedo_recoloring/gimp_2_1.png" height="auto" width="auto">
+The arrangement of the layers depends on the image editor being used. The above image is from Gimp 2.1.
+If using layer groups, make sure the blend mode for the group is set to Pass through.
 
-```
-Previous Albedo (Divide)
-New Albedo (Multiply)
-Base Render
-```
+The order is important when working in 8 bits per channel images. Multiplying first mitigates potential clipping issues from the divide layer.
+If the effect still introduces noticeable banding artifacts, try switching to 16 bits per channel.
 
-The order is important when working in 8 bits per channel images. Multiplying first prevents potential clipping issues.
-If the effect introduces noticeable banding artifacts, try switching to 16 bits per channel.
+### Gimp, Photoshop, Krita
+- Recolor Group + Mask (Pass through)
+    - Previous Albedo (Divide)
+    - New Albedo (Multiply)
+- Base Render
 
 If the final result is very discolored, double check the color used for the original albedo.
 Another copy of the new albedo layer can be added to even out the color with the opacity adjusted as needed.
+The color blend mode should be available in most image editors.
 
-```
-New Albedo (Color)
-Previous Albedo (Divide)
-New Albedo (Multiply)
-Base Render
-```
+- Recolor Group + Mask (Pass through)
+    - New Albedo (Color) 
+    - Previous Albedo (Divide)
+    - New Albedo (Multiply)
+- Base Render
 
+### Affinity Photo
 If the image editor doesn't support the divide blending mode, invert the previous albedo color and set the layer blend
-mode to color dodge.
-```
-1 - Previous Albedo (Color Dodge)
-New Albedo (Multiply)
-Base Render
-```
+mode to color dodge. This performs the same operation as divide.
+
+- Recolor Group (Pass through)
+    - Mask
+    - 1 - Previous Albedo (Color Dodge)
+    - New Albedo (Multiply)
+- Base Render
+
+# Further Reading
+For custom renders, there are more render passes available that can perfectly recreate the final render. 
+See Blender's <a href="https://docs.blender.org/manual/en/latest/render/layers/passes.html#combining" target="_blank">AOV Documentation</a>
+for details. Remember to composite AOVs in 32 bit floating point with linear gamma (1.0) for proper blending and to avoid clipping!
 
 <script type="module">
     import { AlbedoRecoloringDemo } from "./js/albedo_recoloring.js";
