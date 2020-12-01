@@ -40,8 +40,7 @@ class SphereScene {
         const maxDimension = Math.max(this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight);
 
         // Set the pixel ratio to set the correct resolution for high PPI displays.
-        // TODO: This doubles the dimensions on every resize?
-        //this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(maxDimension, maxDimension, false);
     };
 }

@@ -38,12 +38,15 @@ class SssDemo {
                     directShading = clamp(directShading, 0.0, 1.0);
 
                     // Adjust albedo.
-                    vec3 albedoFinal = albedo.rgb;
+                    vec3 albedoFinal = pow(albedo.rgb, vec3(2.2));
                     albedoFinal = mix(albedoFinal, CustomVector11, sssBlend);
                     albedoFinal += CustomVector11 * sssBlend;
 
-                    float lighting = directShading * 0.65 + 0.35;
+                    float lighting = directShading + 0.5;
                     vec3 result = albedoFinal * lighting;
+
+                    // Gamma correction.
+                    result = pow(result, vec3(1.0 / 2.2));
                     gl_FragColor = vec4(result,1.0);
                 }`,
             uniforms: {

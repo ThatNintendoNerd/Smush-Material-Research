@@ -2,7 +2,7 @@
 Realtime demos that run in the browser using WebGL. These should work on most computers, phones, and tablets.  
 
 - [Albedo Recoloring](albedo_recoloring)
-
+- [Skin Materials](skin_materials)
 
 ## Tools 
 - <a href="https://github.com/Ploaj/SSBHLib/releases" target="_blank">Cross Mod</a> - Model viewer and material editor
