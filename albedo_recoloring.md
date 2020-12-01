@@ -68,7 +68,7 @@ recolored = lighting * new_albedo
 ```
 
 # Albedo Recoloring in an Image Editor
-<img src="{{ site.url }}/images/albedo_recoloring/gimp_2_1.png" height="auto" width="auto">
+<img src="https://scanmountgoat.github.io/Smush-Material-Research/images/albedo_recoloring/gimp_2_1.png" height="auto" width="auto">
 The arrangement of the layers depends on the image editor being used. The above image is from Gimp 2.1.
 If using layer groups, make sure the blend mode for the group is set to Pass through.
 
