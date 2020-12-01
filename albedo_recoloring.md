@@ -40,7 +40,6 @@ Select a new albedo color to see the armor on the render update in real time.
     New Albedo
     <input type="color" id="newAlbedo" name="newAlbedo" value="#B0AFA9">
 </label>
-<button id="reset">Reset</button>
 
 # Details
 This technique approximates well how fully metallic objects are rendered in game (PRM red channel is 1.0) because
@@ -111,7 +110,6 @@ for details. Remember to composite AOVs in 32 bit floating point with linear gam
 
     const albedoColorInput = document.getElementById("albedo");
     const newAlbedoColorInput = document.getElementById("newAlbedo");
-    const resetButton = document.getElementById("reset");
     const imgCanvas = document.getElementById("imgCanvas");
-    const demo = new AlbedoRecoloringDemo(window, imgCanvas, albedoColorInput, newAlbedoColorInput, resetButton);
+    const demo = new AlbedoRecoloringDemo(window, imgCanvas, albedoColorInput, newAlbedoColorInput);
 </script>

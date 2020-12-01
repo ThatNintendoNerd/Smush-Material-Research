@@ -8,7 +8,6 @@ class AlbedoRecoloringDemo {
      * @param {*} canvas 
      * @param {*} albedoColorInput 
      * @param {*} newAlbedoColorInput 
-     * @param {*} resetButton 
      */
     constructor(window, canvas, albedoColorInput, newAlbedoColorInput, resetButton) {
         const manager = new THREE.LoadingManager();
@@ -68,17 +67,6 @@ class AlbedoRecoloringDemo {
                 material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
                 textureScene.render();
             }, false);
-
-            resetButton.addEventListener("click", function () {
-                // Reset the inputs to the original albedo color.
-                albedoColorInput.value = "#B0AFA9";
-                material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
-
-                newAlbedoColorInput.value = "#B0AFA9";
-                material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
-
-                textureScene.render();
-            });
 
             textureScene.render();
         };
