@@ -1,45 +1,26 @@
 ---
+<style>
+    #imgCanvas {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
 # Albedo Recoloring
 Renders can be recolored by extracting the lighting information and then applying a new albedo color.
 If the same color is used for the previous and new albedo, the final result is unchanged. 
 The render will accurately match the selected new albedo color without the need for a levels/curves adjustment. 
 This also preserves the color variations in the original lighting unlike automatic recoloring or similar HSL techniques.
 
-<style>
-    label {
-        margin-right: 20px;
-        margin-top: 0;
-        vertical-align: middle;
-    }
-
-    button {
-        margin-top: 0;
-        vertical-align: middle;
-    }
-
-    #imgCanvas {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-
-    img {
-        max-width: 100%;
-        max-height: 100%;
-    }
-</style>
-
-<canvas id="imgCanvas"></canvas>
+<canvas id="imgCanvas" class="col-lg-7"></canvas>
 Select a new albedo color to see the armor on the render update in real time.
-
-<label for="albedo">
-    Previous Albedo
+<form>
+    <label for="albedo">Previous Albedo</label>
     <input type="color" id="albedo" name="albedo" value="#B0AFA9">
-</label>
-<label for="newAlbedo">
-    New Albedo
+    <label for="newAlbedo">New Albedo</label>
     <input type="color" id="newAlbedo" name="newAlbedo" value="#B0AFA9">
-</label>
+</form>
+
 
 # Details
 This technique approximates well how fully metallic objects are rendered in game (PRM red channel is 1.0) because
