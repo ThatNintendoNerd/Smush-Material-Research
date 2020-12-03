@@ -13,7 +13,7 @@ class AlbedoRecoloringDemo {
         const manager = new THREE.LoadingManager();
 
         const texture = new THREE.TextureLoader(manager).load("/assets/images/albedo_recoloring/corrin.png");
-        const mask = new THREE.TextureLoader(manager).load("./assets/images/albedo_recoloring/mask.png");
+        const mask = new THREE.TextureLoader(manager).load("/assets/images/albedo_recoloring/mask.png");
 
         // Use a loading manager to render the first frame once all textures are loaded.
         manager.onLoad = function () {
