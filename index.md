@@ -1,4 +1,5 @@
 ---
+---
 # Getting Started
 This site contains tutorials on various material, texture, and rendering related topics for Smash Ultimate. 
 The tutorials, demos, and other documentation can be accessed from the top menu.

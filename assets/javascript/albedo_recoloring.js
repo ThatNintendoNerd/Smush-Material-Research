@@ -3,21 +3,27 @@ import { TextureScene } from "./texturescene.js";
 
 class AlbedoRecoloringDemo {
     /**
-     * 
+     * Initializes the albedo coloring demo. 
+     * A single frame is rendered once all textures are loaded.
      * @param {*} window 
-     * @param {*} canvas 
-     * @param {*} albedoColorInput 
-     * @param {*} newAlbedoColorInput 
+     * @param {*} canvas the canvas used for drawing
+     * @param {*} renderImgPath the path of the render to recolor
+     * @param {*} maskImgPath the path of the mask for the region to recolor
+     * @param {DOMString} albedoColor the initial hex color for albedo
+     * @param {DOMString} newAlbedoColor the initial hex color for new albedo
      */
-    constructor(window, canvas, albedoColorInput, newAlbedoColorInput, resetButton) {
+    constructor(window, canvas, renderImgPath, maskImgPath, albedoColor, newAlbedoColor) {
         const manager = new THREE.LoadingManager();
 
-        const texture = new THREE.TextureLoader(manager).load("https://scanmountgoat.github.io/Smush-Material-Research/assets/images/albedo_recoloring/corrin.png");
-        const mask = new THREE.TextureLoader(manager).load("https://scanmountgoat.github.io/Smush-Material-Research/assets/images/albedo_recoloring/mask.png");
+        const texture = new THREE.TextureLoader(manager).load(renderImgPath);
+        const mask = new THREE.TextureLoader(manager).load(maskImgPath);
 
+        this.isLoaded = false;
+
+        const that = this;
         // Use a loading manager to render the first frame once all textures are loaded.
         manager.onLoad = function () {
-            const material = new THREE.ShaderMaterial({
+            that.material = new THREE.ShaderMaterial({
                 vertexShader: `
                     varying vec2 vUv;
                     
@@ -50,26 +56,39 @@ class AlbedoRecoloringDemo {
                 uniforms: {
                     image: { value: texture },
                     mask: { value: mask },
-                    albedo: { value: new THREE.Color(albedoColorInput.value) },
-                    newAlbedo: { value: new THREE.Color(newAlbedoColorInput.value) }
+                    albedo: { value: new THREE.Color(albedoColor) },
+                    newAlbedo: { value: new THREE.Color(newAlbedoColor) }
                 }
             });
 
-            const textureScene = new TextureScene(window, canvas, material);
+            that.textureScene = new TextureScene(window, canvas, that.material);
 
-            // Update the uniforms when changing colors.
-            albedoColorInput.addEventListener("input", function () {
-                material.uniforms.albedo.value = new THREE.Color(albedoColorInput.value);
-                textureScene.render();
-            }, false);
+            that.textureScene.render();
 
-            newAlbedoColorInput.addEventListener("input", function () {
-                material.uniforms.newAlbedo.value = new THREE.Color(newAlbedoColorInput.value);
-                textureScene.render();
-            }, false);
-
-            textureScene.render();
+            that.isLoaded = true;
         };
+    }
+
+    /**
+     * Update the albedo color and rerender the scene.
+     * @param {DOMString } value a hex string for the albedo color in the form #rrggbb.
+     */
+    updateAlbedo(value) {
+        if (this.isLoaded) {
+            this.material.uniforms.albedo.value = new THREE.Color(value);
+            this.textureScene.render();
+        }
+    }
+
+    /**
+     * Update the new albedo color and rerender the scene.
+     * @param {DOMString } value a hex string for the new albedo color in the form #rrggbb.
+     */
+    updateNewAlbedo(value) {
+        if (this.isLoaded) {
+            this.material.uniforms.newAlbedo.value = new THREE.Color(value);
+            this.textureScene.render();
+        }
     }
 }
 

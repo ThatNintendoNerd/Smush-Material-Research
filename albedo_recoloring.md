@@ -1,4 +1,5 @@
 ---
+---
 <style>
     #imgCanvas {
         width: 100%;
@@ -8,8 +9,8 @@
 
 # Albedo Recoloring
 Renders can be recolored by extracting the lighting information and then applying a new albedo color.
-If the same color is used for the previous and new albedo, the final result is unchanged. 
-The render will accurately match the selected new albedo color without the need for a levels/curves adjustment. 
+If the same color is used for the previous and new albedo, the final result is unchanged.
+The render will accurately match the selected new albedo color without the need for a levels/curves adjustment.
 This also preserves the color variations in the original lighting unlike automatic recoloring or similar HSL techniques.
 
 <canvas id="imgCanvas" class="col-lg-7"></canvas>
@@ -24,11 +25,14 @@ Select a new albedo color to see the armor on the render update in real time.
 
 # Details
 This technique approximates well how fully metallic objects are rendered in game (PRM red channel is 1.0) because
-metallic objects have no diffuse component. The results for non metallic materials still match the desired albedo consistently, 
+metallic objects have no diffuse component. The results for non metallic materials still match the desired albedo
+consistently,
 but there may be discolorations. Potential fixes will are discussed in the image editing section.
 
-The albedo values can be copied from the col maps for non skin materials. For skin materials, copy paste the values from Cross Mod's albedo rendering mode 
-by taking a screenshot or using a screen color picker. This takes into account the fake subsurface scattering effect applied in game.
+The albedo values can be copied from the col maps for non skin materials. For skin materials, copy paste the values from
+Cross Mod's albedo rendering mode
+by taking a screenshot or using a screen color picker. This takes into account the fake subsurface scattering effect
+applied in game.
 
 ```c
 // Metals
@@ -42,8 +46,8 @@ lighting = final / col_rgb
 recolored = lighting * new_albedo
 
 // Recoloring Non Metals
-lighting = final / previous_albedo 
-recolored = lighting * new_albedo 
+lighting = final / previous_albedo
+recolored = lighting * new_albedo
 
 ```
 
@@ -52,13 +56,14 @@ recolored = lighting * new_albedo
 The arrangement of the layers depends on the image editor being used. The above image is from Gimp 2.1.
 If using layer groups, make sure the blend mode for the group is set to Pass through.
 
-The order is important when working in 8 bits per channel images. Multiplying first mitigates potential clipping issues from the divide layer.
+The order is important when working in 8 bits per channel images. Multiplying first mitigates potential clipping issues
+from the divide layer.
 If the effect still introduces noticeable banding artifacts, try switching to 16 bits per channel.
 
 ### Gimp, Photoshop, Krita
 - Recolor Group + Mask (Pass through)
-    - Previous Albedo (Divide)
-    - New Albedo (Multiply)
+- Previous Albedo (Divide)
+- New Albedo (Multiply)
 - Base Render
 
 If the final result is very discolored, double check the color used for the original albedo.
@@ -66,9 +71,9 @@ Another copy of the new albedo layer can be added to even out the color with the
 The color blend mode should be available in most image editors.
 
 - Recolor Group + Mask (Pass through)
-    - New Albedo (Color) 
-    - Previous Albedo (Divide)
-    - New Albedo (Multiply)
+- New Albedo (Color)
+- Previous Albedo (Divide)
+- New Albedo (Multiply)
 - Base Render
 
 ### Affinity Photo
@@ -76,18 +81,20 @@ If the image editor doesn't support the divide blending mode, invert the previou
 mode to color dodge. This performs the same operation as divide.
 
 - Recolor Group (Pass through)
-    - Mask
-    - 1 - Previous Albedo (Color Dodge)
-    - New Albedo (Multiply)
+- Mask
+- 1 - Previous Albedo (Color Dodge)
+- New Albedo (Multiply)
 - Base Render
 
 # Examples
 <img src="{{ "/assets/images/albedo_recoloring/corrin_m_c04.jpg" | relative_url }}" height="auto" width="auto">
 
 # Further Reading
-For custom renders, there are more render passes available that can perfectly recreate the final render. 
-See Blender's <a href="https://docs.blender.org/manual/en/latest/render/layers/passes.html#combining" target="_blank">AOV Documentation</a>
-for details. Remember to composite AOVs in 32 bit floating point with linear gamma (1.0) for proper blending and to avoid clipping!
+For custom renders, there are more render passes available that can perfectly recreate the final render.
+See Blender's <a href="https://docs.blender.org/manual/en/latest/render/layers/passes.html#combining"
+    target="_blank">AOV Documentation</a>
+for details. Remember to composite AOVs in 32 bit floating point with linear gamma (1.0) for proper blending and to
+avoid clipping!
 
 <script type="module">
     import { AlbedoRecoloringDemo } from "./assets/javascript/albedo_recoloring.js";
@@ -95,5 +102,20 @@ for details. Remember to composite AOVs in 32 bit floating point with linear gam
     const albedoColorInput = document.getElementById("albedo");
     const newAlbedoColorInput = document.getElementById("newAlbedo");
     const imgCanvas = document.getElementById("imgCanvas");
-    const demo = new AlbedoRecoloringDemo(window, imgCanvas, albedoColorInput, newAlbedoColorInput);
+
+    // The texture paths are preprocessed by jekyll to contain the full path.
+    const demo = new AlbedoRecoloringDemo(window, imgCanvas, 
+        "{{ "/assets/images/albedo_recoloring/corrin.png" | relative_url }}", 
+        "{{ "/assets/images/albedo_recoloring/mask.png" | relative_url }}", 
+        albedoColorInput.value, 
+        newAlbedoColorInput.value);
+
+    // Update the uniforms when changing colors.
+    albedoColorInput.addEventListener("input", function () {
+        demo.updateAlbedo(albedoColorInput.value);
+    }, false);
+
+    newAlbedoColorInput.addEventListener("input", function () {
+        demo.updateNewAlbedo(newAlbedoColorInput.value);
+    }, false);
 </script>
