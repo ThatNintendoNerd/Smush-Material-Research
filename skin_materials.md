@@ -50,10 +50,6 @@ The parameters can also be tweaked for more stylized diffuse shading, such as ce
             </div>
         </form>
     </div>
-
-
-
-
 </div>
 
 
@@ -84,7 +80,7 @@ white has full effect. Painting areas of the metalness map black
 will mask out the changes to diffuse shading and albedo color.
 
 <script type="module">
-    import { SssDemo } from "./js/skin_materials.js";
+    import { SssDemo } from "/assets/javascript/skin_materials.js";
     const imgCanvas = document.getElementById("imgCanvas");
 
     const albedo = document.getElementById("albedo");
