@@ -7,10 +7,24 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ site.github.repository_url }}">Github</a>
-        </li>
+      <ul class="navbar-nav mr-auto">
+        <a class="nav-link nav-item" href="{{ "/" | relative_url }}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link nav-item" href="{{ "/albedo_recoloring" | relative_url }}">Albedo Recoloring</a>
+        <a class="nav-link nav-item" href="{{ "/skin_materials" | relative_url }}">Skin Materials</a>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Documentation
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="https://github.com/ScanMountGoat/Smush-Material-Research/blob/master/Material%20Parameters.md" target="_blank">Material Parameters</a>
+            <a class="dropdown-item" href="https://github.com/ScanMountGoat/Smush-Material-Research/blob/master/Textures.md" target="_blank">Textures</a>
+            <a class="dropdown-item" href="https://github.com/ScanMountGoat/Smush-Material-Research/blob/master/Vertex%20Attributes.md" target="_blank">Vertex Attributes</a>
+            <a class="dropdown-item" href="https://github.com/ScanMountGoat/Smush-Material-Research/blob/master/Render%20Passes.md" target="_blank">Render Passes</a>
+            <a class="dropdown-item" href="https://github.com/ScanMountGoat/Smush-Material-Research/blob/master/Stage%20Light%20Parameters.md" target="_blank">Stage Light Parameters</a>
+            <a class="dropdown-item" href="https://github.com/ScanMountGoat/Smush-Material-Research/blob/master/XMB.md" target="_blank">XMB Attributes</a>
+          </div>
+        </div>
+        <a class="nav-link nav-item" href="{{ site.github.repository_url }}" target="_blank">Github</a>
       </ul>
     </div>
   </div>

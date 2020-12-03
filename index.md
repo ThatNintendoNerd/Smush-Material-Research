@@ -1,10 +1,11 @@
 ---
-# Tutorials
-This is a list of tutorials on various material, texture, and rendering related topics for Smash Ultimate. 
+# Getting Started
+This site contains tutorials on various material, texture, and rendering related topics for Smash Ultimate. 
+The tutorials, demos, and other documentation can be accessed from the top menu.
 Many of these have interactive demos using WebGL, which should work on most computers, phones, and tablets.  
 
-- [Albedo Recoloring](albedo_recoloring)
-- [Skin Materials](skin_materials)
+The documentation items link to the documentation pages on the main repository. These pages are more concise and not targeted at beginners. 
+Check these links for up to date information, including topics not covered on this site.
 
 # Tools 
 - <a href="https://github.com/Ploaj/SSBHLib/releases" target="_blank">Cross Mod</a> - Model viewer and material editor
