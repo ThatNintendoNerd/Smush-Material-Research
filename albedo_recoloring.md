@@ -48,7 +48,7 @@ recolored = lighting * new_albedo
 ```
 
 # Albedo Recoloring in an Image Editor
-<img src="/assets/images/albedo_recoloring/gimp_2_1.jpg" height="auto" width="auto">
+<img src="{{ "/assets/images/albedo_recoloring/gimp_2_1.jpg" | relative_url }}" height="auto" width="auto">
 The arrangement of the layers depends on the image editor being used. The above image is from Gimp 2.1.
 If using layer groups, make sure the blend mode for the group is set to Pass through.
 
@@ -82,7 +82,7 @@ mode to color dodge. This performs the same operation as divide.
 - Base Render
 
 # Examples
-<img src="./assets/images/albedo_recoloring/corrin_m_c04.jpg" height="auto" width="auto">
+<img src="{{ "/assets/images/albedo_recoloring/corrin_m_c04.jpg" | relative_url }}" height="auto" width="auto">
 
 # Further Reading
 For custom renders, there are more render passes available that can perfectly recreate the final render. 
