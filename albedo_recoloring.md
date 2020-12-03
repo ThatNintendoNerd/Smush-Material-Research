@@ -82,7 +82,7 @@ mode to color dodge. This performs the same operation as divide.
 - Base Render
 
 # Examples
-<img src="/assets/images/albedo_recoloring/corrin_m_c04.jpg" height="auto" width="auto">
+<img src="./assets/images/albedo_recoloring/corrin_m_c04.jpg" height="auto" width="auto">
 
 # Further Reading
 For custom renders, there are more render passes available that can perfectly recreate the final render. 
@@ -90,7 +90,7 @@ See Blender's <a href="https://docs.blender.org/manual/en/latest/render/layers/p
 for details. Remember to composite AOVs in 32 bit floating point with linear gamma (1.0) for proper blending and to avoid clipping!
 
 <script type="module">
-    import { AlbedoRecoloringDemo } from "/assets/javascript/albedo_recoloring.js";
+    import { AlbedoRecoloringDemo } from "./assets/javascript/albedo_recoloring.js";
 
     const albedoColorInput = document.getElementById("albedo");
     const newAlbedoColorInput = document.getElementById("newAlbedo");
