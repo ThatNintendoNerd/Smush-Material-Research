@@ -3,8 +3,9 @@
 # PRM Maps
 PRM maps control most of the important shading parameters for the more physically based materials introduced in Smash
 Ultimate.
-The different channels of the PRM maps correspond to four separate textures for the red, green, blue, and alpha channel.
-The channels correspond to metalness, roughness, ambient occlusion, and specular, respectively. PRM maps work similarly
+The different channels of the PRM maps correspond to four separate textures. 
+The red channel is metalness, the green channel is roughness, the blue channel is ambient occlusion, and the alpha channel is specular.
+PRM maps work similarly
 to the inputs to Disney's principled shader, which is the basis for [Blender's Principled
 Shader](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html)
 and the shading in many modern games.
@@ -61,7 +62,7 @@ and the shading in many modern games.
 </div>
 
 ## PRM Color Channels
-Despite often being very colorful (pink/cyan) when previewed in an image editor, *PRM maps do not contain color data*.
+Although PRM maps are often very colorful (pink/cyan) when previewed in an image editor, *PRM maps do not contain color data*.
 Avoid saving PRM maps as DDS or Nutexb with
 srgb formats. Srgb formats have names that end in _SRGB. When rendering in programs such as Maya or Blender, set the PRM
 maps to raw, non color data, or linear to ensure
@@ -77,11 +78,12 @@ The specular intensity for non metals is controlled by the PRM's specular. Metal
 and specular intenisty is controlled entirely by albedo. In the demo above, note how the specular highlight becomes
 closer in color to the albedo color as metalness increases.
 
+Skin materials are a special case and instead use the metalness map as a mask for the fake subsurface scattering effect. 
+See the [Skin Materials](skin_materials) page for details.
+
 ### Roughness (<span style="color:green">Green</span>)
 Roughness affects the size of the specular highlight. Rougher surfaces have larger specular highlights than glossy
 surfaces.
-Compare roughness values of 0.0, 0.25, 0.5, and 1.0 in the demo above to see the changes in both the size and brightness
-of the specular highlight.
 
 The environment reflections will look blurrier for larger roughness values for both metals and non metals.
 This is achieved using a cube map and mipmapping. Higher roughness values use smaller mipmaps,
@@ -89,9 +91,9 @@ resulting in more even specular lighting. In the demo above, set metalness to 1.
 roughness values.
 
 Physically based surfaces shouldn't reflect more light than they receive, so larger roughness values make the specular
-highlight darker to preserve the overall amount of light being reflected. A matte screen, for example, has much darker
-reflections than a glossy screen, but the reflections are more spread out and can make the screen look washed out in
-bright lighting.
+highlight darker to preserve the overall amount of light being reflected. A rough, matte screen, for example, has reflections 
+that are much darker than a glossy screen. Compare roughness values of 0.0, 0.25, 0.5, and 1.0 in the demo above to see 
+the changes in both the size and brightness of the specular highlight.
 
 ### Ambient Occlusion (<span style="color:blue">Blue</span>)
 Ambient occlusion simulates the shadowing of occluded surfaces that would be difficult to recreate using traditional
@@ -112,7 +114,7 @@ Surfaces in the real world exhibit something called the *fresnel effect* where t
 of the surface depends on the angle between the orientation of the surface and the viewing direction. 
 The effect is easiest to see on glossy surfaces such as the screen of a smartphone or television with the screen turned off. 
 Imagine watching television in a bright room. When looking directly at the screen, the reflections may not be too distracting. 
-When trying to look at the screen from at far to either side of the screen, the reflections appear much more intense. 
+When trying to look at the screen while sitting to the side of the screen, the reflections appear much more intense. 
 
 The alpha channel of the PRM map controls the reflectivity of the surface when viewed from head on. 
 The reflectivity always approaches 1.0 at glancing angles. Specular is scaled by 0.2, so a specular value of 0.5 
