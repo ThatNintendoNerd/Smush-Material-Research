@@ -97,6 +97,7 @@ avoid clipping!
 
 <script type="module">
     import { AlbedoRecoloringDemo } from "./assets/javascript/albedo_recoloring.js";
+    import * as DataBinding from "./assets/javascript/databinding.js";
 
     const albedoColorInput = document.getElementById("albedo");
     const newAlbedoColorInput = document.getElementById("newAlbedo");
@@ -109,12 +110,6 @@ avoid clipping!
         albedoColorInput.value, 
         newAlbedoColorInput.value);
 
-    // Update the uniforms when changing colors.
-    albedoColorInput.addEventListener("input", function () {
-        demo.updateAlbedo(albedoColorInput.value);
-    }, false);
-
-    newAlbedoColorInput.addEventListener("input", function () {
-        demo.updateNewAlbedo(newAlbedoColorInput.value);
-    }, false);
+    DataBinding.oneWayBindColor(albedoColorInput, demo.updateAlbedo.bind(demo));
+    DataBinding.oneWayBindColor(newAlbedoColorInput, demo.updateNewAlbedo.bind(demo));
 </script>

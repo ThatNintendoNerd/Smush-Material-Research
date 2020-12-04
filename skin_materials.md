@@ -97,13 +97,22 @@ The third and fourth parameters are unused, despite having values set for some m
 
 <script type="module">
     import { SssDemo } from "./assets/javascript/skin_materials.js";
+    import * as DataBinding from "./assets/javascript/databinding.js";
+
     const imgCanvas = document.getElementById("imgCanvas");
 
     const albedo = document.getElementById("albedo");
+
     const customVector11 = document.getElementById("customVector11");
+
     const metalness = document.getElementById("metalness");
+    const metalnessText = document.getElementById("metalnessText");
+
     const customVector30x = document.getElementById("customVector30x");
+    const customVector30xText = document.getElementById("customVector30xText");
+
     const customVector30y = document.getElementById("customVector30y");
+    const customVector30yText = document.getElementById("customVector30yText");
 
     const getRangeValue = function (range) { return parseFloat(range.value); };
 
@@ -114,41 +123,10 @@ The third and fourth parameters are unused, despite having values set for some m
         getRangeValue(customVector30y),
         getRangeValue(metalness));
 
-    albedo.addEventListener("input", function () {
-        demo.updateAlbedo(albedo.value);
-    });
+    DataBinding.oneWayBindColor(albedo, demo.updateAlbedo.bind(demo));
+    DataBinding.oneWayBindColor(customVector11, demo.updateCustomVector11.bind(demo));
 
-    customVector11.addEventListener("input", function () {
-        demo.updateCustomVector11(customVector11.value);
-    });
-
-    const metalnessText = document.getElementById("metalnessText");
-    metalnessText.addEventListener("input", function () {
-        metalness.value = metalnessText.value;
-        demo.updateMetalness(parseFloat(metalnessText.value));
-    });
-    metalness.addEventListener("input", function () {
-        demo.updateMetalness(getRangeValue(metalness));
-        metalnessText.value = metalness.value;
-    });
-
-    const customVector30xText = document.getElementById("customVector30xText");
-    customVector30x.addEventListener("input", function () {
-        customVector30xText.value = customVector30x.value;
-        demo.updateCustomVector30x(getRangeValue(customVector30x));
-    });
-    customVector30xText.addEventListener("input", function () {
-        customVector30x.value = customVector30xText.value;
-        demo.updateCustomVector30x(parseFloat(customVector30xText.value));
-    });
-
-    const customVector30yText = document.getElementById("customVector30yText");
-    customVector30y.addEventListener("input", function () {
-        customVector30yText.value = customVector30y.value;
-        demo.updateCustomVector30y(getRangeValue(customVector30y, 30));
-    });
-    customVector30yText.addEventListener("input", function () {
-        customVector30y.value = customVector30yText.value;
-        demo.updateCustomVector30y(parseFloat(customVector30yText.value));
-    });
+    DataBinding.oneWayBindFloat(metalness, metalnessText, demo.updateMetalness.bind(demo));
+    DataBinding.oneWayBindFloat(customVector30x, customVector30xText, demo.updateCustomVector30x.bind(demo));
+    DataBinding.oneWayBindFloat(customVector30y, customVector30yText, demo.updateCustomVector30y.bind(demo));
 </script>

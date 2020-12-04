@@ -2,6 +2,16 @@ import * as THREE from "./three.module.js";
 import { SphereScene } from "./spherescene.js";
 
 class PrmDemo {
+    /**
+     * 
+     * @param {*} window 
+     * @param {*} canvas 
+     * @param {DOMString} albedo the initial albedo color in the form #rrggbb
+     * @param {Number} mtl the initial metalness
+     * @param {Number} rgh the initial roughness
+     * @param {Number} ao the initial ambient occlusion
+     * @param {Number} spc the initial specular
+     */
     constructor(window, canvas, albedo, mtl, rgh, ao, spc) {
         this.material = new THREE.ShaderMaterial({
             vertexShader: `
@@ -87,11 +97,14 @@ class PrmDemo {
                     vec3 kSpecular = GetSpecularWeight(specular * 0.2, albedo, metalness, nDotV, roughness);
                     float specularBrdf = Ggx(nDotH, nDotL, nDotV, roughness);
 
+                    // Crude approximation for ambient term.
+                    float ambientLighting = 0.5;
+
                     vec3 kDiffuse = max((vec3(1.0) - kSpecular) * (1.0 - metalness), 0.0);
-                    float diffuseLighting = nDotL + 0.5;
+                    float diffuseLighting = nDotL + (ambientLighting * ambientOcclusion);
 
                     vec3 result = kDiffuse * albedo * diffuseLighting / 3.14159;
-                    result += kSpecular * specularBrdf;
+                    result += kSpecular * (specularBrdf + ambientLighting) * ambientOcclusion;
 
                     // Gamma correction.
                     result = pow(result, vec3(1.0 / 2.2));

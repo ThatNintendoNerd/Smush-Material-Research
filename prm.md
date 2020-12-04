@@ -17,7 +17,7 @@
             <form>
                 <div class="form-group row justify-content-end">
                     <label for="albedo" class="col-md-5 col-form-label">Albedo</label>
-                    <input type="color" name="albedo" id="albedo" value="#3D3D3D" class="col-md-2">
+                    <input type="color" name="albedo" id="albedo" value="#FF0000" class="col-md-2">
                     <div class="col"></div>
                 </div>
                 <div class="form-group row justify-content-end">
@@ -51,6 +51,8 @@
 
 <script type="module">
     import { PrmDemo } from "./assets/javascript/prm.js";
+    import * as DataBinding from "./assets/javascript/databinding.js";
+
     const imgCanvas = document.getElementById("imgCanvas");
 
     const getRangeValue = function (range) { return parseFloat(range.value); };
@@ -58,9 +60,16 @@
     const albedo = document.getElementById("albedo");
 
     const metalnessText = document.getElementById("metalnessText");
+    const metalnessRange = document.getElementById("metalness");
+
     const roughnessText = document.getElementById("roughnessText");
+    const roughnessRange = document.getElementById("roughness");
+
     const aoText = document.getElementById("aoText");
+    const aoRange = document.getElementById("ao");
+
     const specularText = document.getElementById("specularText");
+    const specularRange = document.getElementById("specular");
 
     const demo = new PrmDemo(window, imgCanvas, 
         albedo.value, 
@@ -69,43 +78,9 @@
         parseFloat(aoText.value), 
         parseFloat(specularText.value));
 
-    metalnessText.addEventListener("input", function () {
-        metalness.value = metalnessText.value;
-        demo.updateMetalness(parseFloat(metalnessText.value));
-    });
-    metalness.addEventListener("input", function () {
-        demo.updateMetalness(getRangeValue(metalness));
-        metalnessText.value = metalness.value;
-    });
-
-    roughnessText.addEventListener("input", function () {
-        roughness.value = roughnessText.value;
-        demo.updateRoughness(parseFloat(roughnessText.value));
-    });
-    roughness.addEventListener("input", function () {
-        demo.updateRoughness(getRangeValue(roughness));
-        roughnessText.value = roughness.value;
-    });
-
-    specularText.addEventListener("input", function () {
-        specular.value = specularText.value;
-        demo.updateSpecular(parseFloat(specularText.value));
-    });
-    specular.addEventListener("input", function () {
-        demo.updateSpecular(getRangeValue(specular));
-        specularText.value = specular.value;
-    });
-
-    aoText.addEventListener("input", function () {
-        ao.value = aoText.value;
-        demo.updateAmbientOcclusion(parseFloat(aoText.value));
-    });
-    ao.addEventListener("input", function () {
-        demo.updateAmbientOcclusion(getRangeValue(ao));
-        aoText.value = ao.value;
-    });
-
-    albedo.addEventListener("input", function () {
-        demo.updateAlbedo(albedo.value);
-    });
+    DataBinding.oneWayBindFloat(metalnessText, metalnessRange, demo.updateMetalness.bind(demo));
+    DataBinding.oneWayBindFloat(roughnessText, roughnessRange, demo.updateRoughness.bind(demo));
+    DataBinding.oneWayBindFloat(aoText, aoRange, demo.updateAmbientOcclusion.bind(demo));
+    DataBinding.oneWayBindFloat(specularText, specularRange, demo.updateSpecular.bind(demo));
+    DataBinding.oneWayBindColor(albedo, demo.updateAlbedo.bind(demo));
 </script>
