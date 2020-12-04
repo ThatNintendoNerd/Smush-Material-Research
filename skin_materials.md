@@ -7,54 +7,67 @@ The parameters can also be tweaked for more stylized diffuse shading, such as ce
 <style>
     #imgCanvas {
         width: 100%;
-        height: 100%;
     }
 </style>
 
 <div class="container">
-    <div class="col-md-5">
-        <canvas id="imgCanvas"></canvas>
-    </div>
-    <div class="col">
-        <form id="form-horizontal">
-            <div class="form-group row">
-                <p>Edit the values below to see the effect on diffuse shading in real time.</p>
-            </div>
-            <div class="form-group row justify-content-end">
-                <label for="metalness" class="col-sm-5 col-form-label">Metalness</label>
-                <input type="text" value="1.0" name="metalness" id="metalnessText" class="col-sm-2 col-md-1">
-                <input type="range" value="1.0" min="0.0" max="1.0" step="0.001" name="metalness" id="metalness"
-                    class="col">
-            </div>
-            <div class="form-group row justify-content-end">
-                <label for="albedo" class="col-sm-5 col-form-label">Albedo</label>
-                <input type="color" name="albedo" id="albedo" value="#E6DEC7" class="col-sm-2 col-md-1">
-                <div class="col"></div>
-            </div>
-            <div class="form-group row justify-content-end">
-                <label for="customVector11" class="col-sm-5 col-form-label">CustomVector11.rgb</label>
-                <input type="color" name="customVector11" id="customVector11" value="#401200" class="col-sm-2 col-md-1">
-                <div class="col"></div>
-            </div>
-            <div class="form-group row justify-content-end">
-                <label for="customVector30x" class="col-sm-5 col-form-label">CustomVector30.x</label>
-                <input type="text" value="0.5" name="customVector30x" id="customVector30xText"
-                    class="col-sm-2 col-md-1">
-                <input type="range" value="0.5" min="0.0" max="1.0" step="0.001" name="customVector30x"
-                    id="customVector30x" class="col">
-            </div>
-            <div class="form-group row justify-content-end">
-                <label for="customVector30y" class="col-sm-5 col-form-label">CustomVector30.y</label>
-                <input type="text" value="1.5" name="customVector30y" id="customVector30yText" class="col-sm-2 col-md-1">
-                <input type="range" value="1.5" min="0.0" max="30.0" step="0.01" name="customVector30y"
-                    id="customVector30y" class="col">
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-5">
+            <canvas id="imgCanvas"></canvas>
+        </div>
+        <div class="col">
+            <form>
+                <div class="form-group row">
+                    <p>Edit the values below to see the effect on diffuse shading in real time.</p>
+                </div>
+                <div class="form-group row justify-content-end">
+                    <label for="metalness" class="col-md-5 col-form-label">Metalness</label>
+                    <input type="text" value="1.0" name="metalness" id="metalnessText" class="col-md-2">
+                    <input type="range" value="1.0" min="0.0" max="1.0" step="0.001" name="metalness" id="metalness"
+                        class="col">
+                </div>
+                <div class="form-group row justify-content-end">
+                    <label for="albedo" class="col-md-5 col-form-label">Albedo</label>
+                    <input type="color" name="albedo" id="albedo" value="#E6DEC7" class="col-md-2">
+                    <div class="col"></div>
+                </div>
+                <div class="form-group row justify-content-end">
+                    <label for="customVector11" class="col-md-5 col-form-label">CustomVector11.rgb</label>
+                    <input type="color" name="customVector11" id="customVector11" value="#401200" class="col-md-2">
+                    <div class="col"></div>
+                </div>
+                <div class="form-group row justify-content-end">
+                    <label for="customVector30x" class="col-md-5 col-form-label">CustomVector30.x</label>
+                    <input type="text" value="0.5" name="customVector30x" id="customVector30xText"
+                        class="col-md-2">
+                    <input type="range" value="0.5" min="0.0" max="1.0" step="0.001" name="customVector30x"
+                        id="customVector30x" class="col">
+                </div>
+                <div class="form-group row justify-content-end">
+                    <label for="customVector30y" class="col-md-5 col-form-label">CustomVector30.y</label>
+                    <input type="text" value="1.5" name="customVector30y" id="customVector30yText"
+                        class="col-md-2">
+                    <input type="range" value="1.5" min="0.0" max="30.0" step="0.01" name="customVector30y"
+                        id="customVector30y" class="col">
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
+## Blending Intensity 
+The overall intensity of the effect is controlled by CustomVector30.x, which should have values between 0.0 and 1.0 to avoid artifacts. 
+The metalness map stored in the PRM red channel for skin materials doesn't make the material metallic and instead is used to mask the effect.
+For full effect, both the metalness map and CustomVector30.x should be set to 1.0. 
+If either CustomVector30.x or the metalness map are 0.0, the material will use the default diffuse shading.
 
-# Details
+```glsl
+// CustomVector30.x is the overall intensity.
+// Metalness acts like a "mask".
+float sssBlend = CustomVector30.x * metalness;
+```
+
+## Albedo Color
 The RGB values for CustomVector11 control the subsurface color. This is typically a dark red color to approximate skin.
 Bright colors will likely cause unwanted bloom.
 The albedo color is calculated using the col map color as well as CustomVector11's color.
@@ -62,23 +75,25 @@ The albedo color is calculated using the col map color as well as CustomVector11
 ```glsl
 // Blend the col map color with the subsurface color.
 // Note that CustomVector11 makes the albedo brighter.
-float sssBlend = CustomVector30.x * metalness;
 vec3 albedoFinal = mix(col.rgb, CustomVector11.rgb, sssBlend);
 albedoFinal += CustomVector11.rgb * sssBlend;
 ```
 
-The first two values for CustomVector30 are parameters to control the blending intensity.
-The first param or CustomVector30.x controls the intensity of the effect with values between 0.0 and 1.0.
+### Diffuse Shading
+CustomVector30.y is multiplied by the diffuse shading to control the smoothness of the shading.
+Using a very high value for the second value of CustomVector30 creates a cel-shaded look because diffuse shading is clamped to 1.0.
+A very similar technique is used for Breath of the Wild's shaders, for example.
 
-The second param or CustomVector30.y is multiplied by the diffuse shading to control the smoothness of the shading.
-Using a very high value for the second value of CustomVector30 creates a cel-shaded look. A very similar technique is
-used for Breath of the Wild's shaders, for example.
+```glsl
+float skinShading = diffuseShading * CustomVector30.y;
+float finalDiffuseShading = mix(nDotL, skinShading, sssBlend);
+finalDiffuseShading = clamp(finalDiffuseShading, 0.0, 1.0);
+```
 
 The third and fourth parameters are unused, despite having values set for some models.
 
-The metalness map, contained in the PRM red channel, is used to mask the overall effect. A metalness map set to all
-white has full effect. Painting areas of the metalness map black
-will mask out the changes to diffuse shading and albedo color.
+
+
 
 <script type="module">
     import { SssDemo } from "./assets/javascript/skin_materials.js";

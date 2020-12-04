@@ -8,6 +8,11 @@ Many of these have interactive demos using WebGL, which should work on most comp
 The documentation items link to the documentation pages on the main repository. These pages are more concise and not targeted at beginners. 
 Check these links for up to date information, including topics not covered on this site.
 
+## CustomVectorParam Swizzling
+CustomVector parameters have 4 values. These values are floating point numbers like 0.0, -200.4, or 1.3333. 
+The 4 values will be referred to as XYZW or RGBA depending for convenience. For example, CustomVector11.g or CustomVector11.y both refer to the second value for CustomVector11. 
+CustomVector11.w or CustomVector11.a both refer to the fourth value. Mixing and matching representations in the same context will be avoided where possible.
+
 # Tools 
 - <a href="https://github.com/Ploaj/SSBHLib/releases" target="_blank">Cross Mod</a> - Model viewer and material editor
 - <a href="https://github.com/Ploaj/SSBHLib/releases" target="_blank">Mat Lab</a> - CLI tool for editing materials as XML
