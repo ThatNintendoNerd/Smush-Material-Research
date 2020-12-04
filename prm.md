@@ -28,7 +28,7 @@ and the shading in many modern games.
                     <div class="col"></div>
                 </div>
                 <div class="form-group row justify-content-end">
-                    <label for="prmColor" class="col-md-4 col-form-label">PRM Color</label>
+                    <label for="prmColor" class="col-md-4 col-form-label">PRM RGB</label>
                     <input type="color" name="prmColor" id="prmColor" value="#007FFF" class="col-md-2">
                     <div class="col"></div>
                 </div>
@@ -196,8 +196,19 @@ Some applications may use <abbr title="Index of Reflection/Refraction">IOR</abbr
         parseFloat(aoText.value),
         parseFloat(specularText.value));
 
-    // TODO: Databind colors?
+    // Databind PRM Color.
     const prmColor = document.getElementById("prmColor");
+
+    DataBinding.twoWayBindInputsToColor(metalnessText, roughnessText, aoText, prmColor);
+    DataBinding.twoWayBindInputsToColor(metalnessRange, roughnessRange, aoRange, prmColor);
+
+    prmColor.addEventListener("input", function() {
+        // Update the rendering when the color changes.
+        const rgb = DataBinding.hexColorToRgb(prmColor.value);
+        demo.updateMetalness(rgb[0]);
+        demo.updateRoughness(rgb[1]);
+        demo.updateAmbientOcclusion(rgb[2]);
+    }, false);
 
     DataBinding.oneWayBindFloat(metalnessText, metalnessRange, demo.updateMetalness.bind(demo));
     DataBinding.oneWayBindFloat(roughnessText, roughnessRange, demo.updateRoughness.bind(demo));
