@@ -12,39 +12,36 @@ The parameters can also be tweaked for more stylized diffuse shading, such as ce
 
 <div class="container">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 my-auto">
             <canvas id="imgCanvas"></canvas>
         </div>
-        <div class="col">
+        <div class="col my-auto">
             <form>
-                <div class="form-group row">
-                    <p>Edit the values below to see the effect on diffuse shading in real time.</p>
-                </div>
                 <div class="form-group row justify-content-end">
-                    <label for="metalness" class="col-md-5 col-form-label">Metalness</label>
+                    <label for="metalness" class="col-md-5 col-lg-4 col-form-label">Metalness</label>
                     <input type="text" value="1.0" name="metalness" id="metalnessText" class="col-md-2">
                     <input type="range" value="1.0" min="0.0" max="1.0" step="0.001" name="metalness" id="metalness"
                         class="col">
                 </div>
                 <div class="form-group row justify-content-end">
-                    <label for="albedo" class="col-md-5 col-form-label">Albedo</label>
+                    <label for="albedo" class="col-md-5 col-lg-4 col-form-label">Albedo</label>
                     <input type="color" name="albedo" id="albedo" value="#E6DEC7" class="col-md-2">
                     <div class="col"></div>
                 </div>
                 <div class="form-group row justify-content-end">
-                    <label for="customVector11" class="col-md-5 col-form-label">CustomVector11.rgb</label>
+                    <label for="customVector11" class="col-md-5 col-lg-4 col-form-label">CustomVector11.rgb</label>
                     <input type="color" name="customVector11" id="customVector11" value="#401200" class="col-md-2">
                     <div class="col"></div>
                 </div>
                 <div class="form-group row justify-content-end">
-                    <label for="customVector30x" class="col-md-5 col-form-label">CustomVector30.x</label>
+                    <label for="customVector30x" class="col-md-5 col-lg-4 col-form-label">CustomVector30.x</label>
                     <input type="text" value="0.5" name="customVector30x" id="customVector30xText"
                         class="col-md-2">
                     <input type="range" value="0.5" min="0.0" max="1.0" step="0.001" name="customVector30x"
                         id="customVector30x" class="col">
                 </div>
                 <div class="form-group row justify-content-end">
-                    <label for="customVector30y" class="col-md-5 col-form-label">CustomVector30.y</label>
+                    <label for="customVector30y" class="col-md-5 col-lg-4 col-form-label">CustomVector30.y</label>
                     <input type="text" value="1.5" name="customVector30y" id="customVector30yText"
                         class="col-md-2">
                     <input type="range" value="1.5" min="0.0" max="30.0" step="0.01" name="customVector30y"

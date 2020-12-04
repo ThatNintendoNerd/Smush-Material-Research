@@ -10,10 +10,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 my-auto">
             <canvas id="imgCanvas"></canvas>
         </div>
-        <div class="col">
+        <div class="col my-auto">
             <form>
                 <div class="form-group row justify-content-end">
                     <label for="albedo" class="col-md-5 col-form-label">Albedo</label>
