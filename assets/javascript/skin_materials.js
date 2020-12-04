@@ -38,7 +38,7 @@ class SssDemo {
                     directShading = clamp(directShading, 0.0, 1.0);
 
                     // Adjust albedo.
-                    vec3 albedoFinal = pow(albedo.rgb, vec3(2.2));
+                    vec3 albedoFinal = albedo.rgb;
                     albedoFinal = mix(albedoFinal, CustomVector11, sssBlend);
                     albedoFinal += CustomVector11 * sssBlend;
 
@@ -64,12 +64,12 @@ class SssDemo {
     }
 
     updateAlbedo(value) {
-        this.material.uniforms.albedo.value = new THREE.Color(value);
+        this.material.uniforms.albedo.value = new THREE.Color(value).convertSRGBToLinear();
         this.sphereScene.render();
     }
 
     updateCustomVector11(value) {
-        this.material.uniforms.CustomVector11.value = new THREE.Color(value);
+        this.material.uniforms.CustomVector11.value = new THREE.Color(value).convertSRGBToLinear();
         this.sphereScene.render();
     }
 

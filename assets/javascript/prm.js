@@ -98,10 +98,11 @@ class PrmDemo {
                     float specularBrdf = Ggx(nDotH, nDotL, nDotV, roughness);
 
                     // Crude approximation for ambient term.
-                    float ambientLighting = 0.5;
+                    float ambientLighting = 1.0;
 
                     vec3 kDiffuse = max((vec3(1.0) - kSpecular) * (1.0 - metalness), 0.0);
                     float diffuseLighting = nDotL + (ambientLighting * ambientOcclusion);
+                    diffuseLighting *= 3.0;
 
                     vec3 result = kDiffuse * albedo * diffuseLighting / 3.14159;
                     result += kSpecular * (specularBrdf + ambientLighting) * ambientOcclusion;
@@ -111,7 +112,7 @@ class PrmDemo {
                     gl_FragColor = vec4(result,1.0);
                 }`,
             uniforms: {
-                albedo: { value: new THREE.Color(albedo) },
+                albedo: { value: new THREE.Color(albedo).convertSRGBToLinear() },
                 metalness: { value: mtl },
                 roughness: { value: rgh },
                 ambientOcclusion: { value: ao },
@@ -125,7 +126,8 @@ class PrmDemo {
     }
 
     updateAlbedo(value) {
-        this.material.uniforms.albedo.value = new THREE.Color(value);
+        this.material.uniforms.albedo.value = new THREE.Color(value).convertSRGBToLinear();
+        console.log(this.material.uniforms.albedo.value);
         this.sphereScene.render();
     }
 

@@ -1,6 +1,6 @@
 ---
 ---
-# PRM Maps - WIP
+# PRM Maps
 PRM maps control most of the important shading parameters for the more physically based materials introduced in Smash
 Ultimate.
 The different channels of the PRM maps correspond to four separate textures for the red, green, blue, and alpha channel.
@@ -24,7 +24,7 @@ and the shading in many modern games.
             <form>
                 <div class="form-group row justify-content-end">
                     <label for="albedo" class="col-md-4 col-form-label">Albedo</label>
-                    <input type="color" name="albedo" id="albedo" value="#FF0000" class="col-md-2">
+                    <input type="color" name="albedo" id="albedo" value="#990000" class="col-md-2">
                     <div class="col"></div>
                 </div>
                 <div class="form-group row justify-content-end">
@@ -105,7 +105,22 @@ Ambient occlusion affects the intensity of specular and diffuse ambient lighting
 differences between setting ambient occlusion to 0.0 for metallic and non metallic materials.
 
 ### Specular (Alpha)
+Specular controls the specular reflectivity of a surface. This effects the brightness of specular highlights and 
+cube map reflections. 
 
+Surfaces in the real world exhibit something called the *fresnel effect* where the reflectivity 
+of the surface depends on the angle between the orientation of the surface and the viewing direction. 
+The effect is easiest to see on glossy surfaces such as the screen of a smartphone or television with the screen turned off. 
+Imagine watching television in a bright room. When looking directly at the screen, the reflections may not be too distracting. 
+When trying to look at the screen from at far to either side of the screen, the reflections appear much more intense. 
+
+The alpha channel of the PRM map controls the reflectivity of the surface when viewed from head on. 
+The reflectivity always approaches 1.0 at glancing angles. Specular is scaled by 0.2, so a specular value of 0.5 
+results in a specular reflectivity of 0.1. A reasonable starting value for specular is 0.16 to avoid overly bright highlights. 
+
+Metals work differently and use the albedo color from the col map as the specular reflectivity. This allows for specular to be 
+tinted by the albedo color. Specular reflectivity is not scaled by 0.2 for metals, so metals can be significantly more reflective.
+A metalness of 1.0 with an albedo set to white will look similar to chrome.
 
 ## PRM Compatibility Details
 In general, PRM maps aren't identical to the PBR textures used in other games and applications, so models will look
@@ -202,7 +217,7 @@ Some applications may use <abbr title="Index of Reflection/Refraction">IOR</abbr
     DataBinding.twoWayBindInputsToColor(metalnessText, roughnessText, aoText, prmColor);
     DataBinding.twoWayBindInputsToColor(metalnessRange, roughnessRange, aoRange, prmColor);
 
-    prmColor.addEventListener("input", function() {
+    prmColor.addEventListener("input", function () {
         // Update the rendering when the color changes.
         const rgb = DataBinding.hexColorToRgb(prmColor.value);
         demo.updateMetalness(rgb[0]);
