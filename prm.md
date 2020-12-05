@@ -211,7 +211,10 @@ Some applications may use <abbr title="Index of Reflection/Refraction">IOR</abbr
         parseFloat(metalnessText.value),
         parseFloat(roughnessText.value),
         parseFloat(aoText.value),
-        parseFloat(specularText.value));
+        parseFloat(specularText.value),
+        "{{ "/assets/images/spec_cube/" | relative_url }}", 
+        0,
+        ".png");
 
     // Databind PRM Color.
     const prmColor = document.getElementById("prmColor");
