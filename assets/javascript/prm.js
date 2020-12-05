@@ -107,7 +107,7 @@ class PrmDemo {
                         vec3 viewVector = normalize(cameraPosition - vPosition);
     
                         vec3 normal = normalize(vNormal);
-                        vec3 lightDirection = normalize(vec3(-0.5,1,0.5));
+                        vec3 lightDirection = normalize(vec3(-0.383022249,0.866025,0.32139495));
                         float nDotL = max(dot(normal, lightDirection), 0.0);
     
                         vec3 halfAngle = normalize(lightDirection + viewVector);
@@ -118,22 +118,20 @@ class PrmDemo {
                         reflectionVector.y *= -1.0;
 
                         float specularLod = RoughnessToLod(roughness);
-                        vec3 specularIbl = textureLod(env, reflectionVector, specularLod).rgb*0.5;
-                        vec3 diffuseIbl = textureLod(env, reflectionVector, 0.0).rgb*0.5;
+                        vec3 specularIbl = textureLod(env, reflectionVector, specularLod).rgb;
+                        vec3 diffuseIbl = textureLod(env, reflectionVector, 5.0).rgb;
     
                         vec3 kSpecular = GetSpecularWeight(specular * 0.2, albedo, metalness, nDotV, roughness);
                         float specularBrdf = Ggx(nDotH, nDotL, nDotV, roughness);
     
-                        float lightingIntensity = 4.0;
+                        float directLightIntensity = 4.0;
     
                         vec3 kDiffuse = max((vec3(1.0) - kSpecular) * (1.0 - metalness), 0.0);
-                        vec3 diffuseLighting = nDotL + (diffuseIbl * ambientOcclusion);
-                        diffuseLighting *= lightingIntensity;
+                        vec3 diffuseLighting = (nDotL * directLightIntensity) + (diffuseIbl * ambientOcclusion);
     
                         vec3 result = kDiffuse * albedo * diffuseLighting / 3.14159;
 
-                        vec3 specularLighting = specularBrdf + specularIbl;
-                        specularLighting *= lightingIntensity;
+                        vec3 specularLighting = (specularBrdf * directLightIntensity) + specularIbl;
                         result += kSpecular * specularLighting * ambientOcclusion;
     
                         // Gamma correction.
@@ -159,7 +157,6 @@ class PrmDemo {
     updateAlbedo(value) {
         if (this.isLoaded) {
             this.material.uniforms.albedo.value = new THREE.Color(value).convertSRGBToLinear();
-            console.log(this.material.uniforms.albedo.value);
             this.sphereScene.render();
         }
     }

@@ -213,7 +213,7 @@ Some applications may use <abbr title="Index of Reflection/Refraction">IOR</abbr
         parseFloat(aoText.value),
         parseFloat(specularText.value),
         "{{ "/assets/images/spec_cube/" | relative_url }}", 
-        0,
+        6,
         ".png");
 
     // Databind PRM Color.

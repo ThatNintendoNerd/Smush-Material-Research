@@ -42,8 +42,7 @@ export async function loadCubeMapWithMipmapsAsync(directory, extension, maxLevel
     const cubeMap = mipmaps.shift();
     cubeMap.mipmaps = mipmaps;
     // TODO: Add mipmaps.
-    // cubeMap.minFilter = THREE.LinearMipMapLinearFilter;
-    cubeMap.minFilter = THREE.NearestFilter;
+    cubeMap.minFilter = THREE.LinearMipMapLinearFilter;
     cubeMap.magFilter = THREE.LinearFilter;
     cubeMap.generateMipmaps = false;
     cubeMap.needsUpdate = true;
