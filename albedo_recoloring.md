@@ -21,18 +21,17 @@ Select a new albedo color to see the armor on the render update in real time.
     <input type="color" id="newAlbedo" name="newAlbedo" value="#B0AFA9">
 </form>
 
-
-# Details
+## Details
 This technique approximates well how fully metallic objects are rendered in game (PRM red channel is 1.0) because
 metallic objects have no diffuse component. The results for non metallic materials still match the desired albedo
 consistently,
 but there may be discolorations. Potential fixes will are discussed in the image editing section.
 
-The albedo values can be copied from the col maps for non skin materials. For skin materials, copy paste the values from
-Cross Mod's albedo rendering mode
-by taking a screenshot or using a screen color picker. This takes into account the fake subsurface scattering effect
-applied in game.
+### How to Determine Albedo Color
+The albedo values can be copied from the Col maps for non skin materials. For skin materials, copy paste the values from
+Cross Mod's albedo rendering mode by taking a screenshot or using a screen color picker. This takes into account the fake subsurface scattering effect applied in game.
 
+### Example Code
 ```c
 // Metals
 final = albedo x specular_light
@@ -47,10 +46,9 @@ recolored = lighting * new_albedo
 // Recoloring Non Metals
 lighting = final / previous_albedo
 recolored = lighting * new_albedo
-
 ```
 
-# Albedo Recoloring in an Image Editor
+## Albedo Recoloring in an Image Editor
 <img src="{{ "/assets/images/albedo_recoloring/gimp_2_1.jpg" | relative_url }}" height="auto" width="auto">
 The arrangement of the layers depends on the image editor being used. The above image is from Gimp 2.1.
 If using layer groups, make sure the blend mode for the group is set to Pass through.
@@ -85,10 +83,10 @@ mode to color dodge. This performs the same operation as divide.
 - New Albedo (Multiply)
 - Base Render
 
-# Examples
+## Examples
 <img src="{{ "/assets/images/albedo_recoloring/corrin_m_c04.jpg" | relative_url }}" height="auto" width="auto">
 
-# Further Reading
+## Further Reading
 For custom renders, there are more render passes available that can perfectly recreate the final render.
 See Blender's <a href="https://docs.blender.org/manual/en/latest/render/layers/passes.html#combining"
     target="_blank">AOV Documentation</a>

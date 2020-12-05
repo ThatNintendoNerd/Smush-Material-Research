@@ -22,8 +22,6 @@ description: >- # this means to ignore newlines until "baseurl:"
 repository: "ScanMountGoat/Smush-Material-Research"
 
 # Build settings
-plugins:
-  - jekyll-feed
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

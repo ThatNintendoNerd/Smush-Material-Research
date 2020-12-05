@@ -1,13 +1,13 @@
 ---
 ---
-# PRM Maps
+# PRM Maps (Texture6)
 PRM maps control most of the important shading parameters for the more physically based materials introduced in Smash
 Ultimate.
 The different channels of the PRM maps correspond to four separate textures. 
 The red channel is metalness, the green channel is roughness, the blue channel is ambient occlusion, and the alpha channel is specular.
 PRM maps work similarly
-to the inputs to Disney's principled shader, which is the basis for [Blender's Principled
-Shader](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html)
+to the inputs to Disney's principled shader, which is the basis for 
+<a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html" target="_blank">Blender's Principled Shader</a>
 and the shading in many modern games.
 
 <style>
