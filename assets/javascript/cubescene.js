@@ -3,7 +3,7 @@ import * as THREE from "./three.module.js"
 /**
  * Stores the state necessary for drawing a textured quad.
  */
-class SphereScene {
+class CubeScene {
     constructor(window, canvas, material) {
         this.renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -12,10 +12,10 @@ class SphereScene {
         });
         this.updateRenderDimensions(window);
 
-        const sphereScene = this;
+        const cubeScene = this;
         window.addEventListener('resize', function () {
-            sphereScene.updateRenderDimensions(window);
-            sphereScene.render();
+            cubeScene.updateRenderDimensions(window);
+            cubeScene.render();
         });
 
         this.scene = new THREE.Scene();
@@ -23,9 +23,9 @@ class SphereScene {
         this.camera = new THREE.PerspectiveCamera(75, 1.0, 0.1, 1000);
         this.camera.position.z = 2;
 
-        const geometry = new THREE.SphereGeometry(1, 32, 32);
-        const sphere = new THREE.Mesh(geometry, material);
-        this.scene.add(sphere);
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const cube = new THREE.Mesh(geometry, material);
+        this.scene.add(cube);
     }
 
     render() {
@@ -45,4 +45,4 @@ class SphereScene {
     };
 }
 
-export { SphereScene };
+export { CubeScene };
