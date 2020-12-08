@@ -1,6 +1,6 @@
 ---
 ---
-# Col Maps (Texture0, Texture1) - WIP
+# Col Maps (Texture0, Texture1)
 Col maps control the albedo of a model. This corresponds to the base color input of
 <a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html" target="_blank">Blender's
     Principled Shader</a>.
@@ -11,16 +11,18 @@ but they aren't strictly necessary.
 ## Col Map Channels
 Col maps contain color data, so they should be saved with srgb formats. Srgb formats have names that end in _SRGB.
 When rendering in programs such as Maya or Blender, set the Col maps to Color, Srgb, etc to ensure they are properly
-gamma corrected. The game assumes that Col maps are gamma corrected. Failing to use an Srgb format will result in the
+gamma corrected. The game assumes that col maps are gamma corrected. Failing to use an Srgb format will result in the
 textures being too bright and looking washed out.
 
 ### Albedo/Base Color (<span style="color:red">R</span><span style="color:green">G</span><span style="color:blue">B</span>)
+<img src="{{ "/assets/images/albedo/mario_albedo.jpg" | relative_url }}" height="auto" width="auto">
+
 Albedo is the overall color of an object. Surfaces with higher albedo reflect more light and appear brighter than surfaces with 
 low albedo. Unlike diffuse maps, albedo maps don't contain any baked lighting or shadows. This means most models in game 
 will have albedo maps that are mostly solid colors. 
 
-Avoid using col map values close to pure white (255,255,255) or pure black (0,0,0). Snow isn't completely white and instead has an albedo values of 0.8 to 0.9. Asphalt has an albedo of close to 0.04. **Smash Ultimate has very intense bloom, so use col map values below 
-0.72 (180 RGB) to avoid overly bright models and unwanted glow**. A col map set to (180,180,180) will look grey in Photoshop but appear 
+Avoid using col map values close to pure white (255,255,255) or pure black (0,0,0). Smash Ultimate has very intense bloom, so use col map values below 
+0.72 (180 RGB) to avoid overly bright models and unwanted glow. A col map set to (180,180,180) will look grey in Photoshop but appear 
 almost completely white in game, for example.
 
 The [Albedo Recoloring](albedo_recoloring), [PRM](prm), and [Skin Materials](skin_materials) pages all have demos that demonstrate the effects of editing the model's albedo color.
