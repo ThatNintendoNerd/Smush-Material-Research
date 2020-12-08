@@ -59,7 +59,6 @@ class DifCubeDemo {
             const controls = new OrbitControls(this.cubeScene.camera, canvas);
             controls.enablePan = false;
             controls.enableZoom = false;
-            controls.autoRotate = true;
             controls.update();
 
             const that = this;
@@ -73,7 +72,7 @@ class DifCubeDemo {
                 that.cubeScene.render();
             }
 
-            //animate();
+            animate();
         };
     }
 }
