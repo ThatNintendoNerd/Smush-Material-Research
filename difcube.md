@@ -1,6 +1,9 @@
 ---
 ---
 # Diffuse Cube Maps (Texture8) - WIP
+Diffuse cube maps are used for special materials that use an environment cube map to color the model. 
+Click and drag on desktop or touch and drag on mobile to orbit the camera in the demo below. Switch between a sphere and cube 
+to see the impact of different geometry on the resulting reflections.
 
 <style>
     #imgCanvas {
@@ -24,8 +27,17 @@
                 </div>
             </form>
         </div>
+        <div class="col">
+            <img src="{{ "/assets/images/dif_cube/cubemap.jpg" | relative_url }}" height="auto" width="auto">
+        </div>
     </div>
 </div>
+
+## Diffuse Cube Map Channels
+### Color (<span style="color:red">R</span><span style="color:green">G</span><span style="color:blue">B</span>)
+
+
+### Opacity (Alpha)
 
 <script type="module">
     import { DifCubeDemo } from "./assets/javascript/difcube.js";
