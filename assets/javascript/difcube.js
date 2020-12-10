@@ -1,6 +1,5 @@
 import * as THREE from "./three.module.js";
 import { SphereScene } from "./spherescene.js";
-import { CubeScene } from "./cubescene.js";
 import { OrbitControls } from "./orbitcontrols.js";
 
 class DifCubeDemo {
@@ -18,8 +17,9 @@ class DifCubeDemo {
                 'negz.png'
             ]);
 
+        const that = this;
         manager.onLoad = function () {
-            this.material = new THREE.ShaderMaterial({
+            that.material = new THREE.ShaderMaterial({
                 vertexShader: `
                     varying vec2 vUv;
                     varying vec3 vNormal;
@@ -53,23 +53,16 @@ class DifCubeDemo {
                 }
             });
 
-            this.sphereScene = new SphereScene(window, canvas, this.material);
-            this.cubeScene = new CubeScene(window, canvas, this.material);
-
-            const controls = new OrbitControls(this.cubeScene.camera, canvas);
+            that.scene = new SphereScene(window, canvas, that.material);
+            
+            const controls = new OrbitControls(that.scene.camera, canvas);
             controls.enablePan = false;
             controls.enableZoom = false;
             controls.update();
 
-            const that = this;
-
             const animate = function () {
+                that.scene.render();
                 requestAnimationFrame(animate);
-
-                // required if controls.enableDamping or controls.autoRotate are set to true
-                controls.update();
-
-                that.cubeScene.render();
             }
 
             animate();

@@ -1,7 +1,7 @@
 import * as THREE from "./three.module.js"
 
 /**
- * Stores the state necessary for drawing a textured quad.
+ * Stores the state necessary for drawing a cube.
  */
 class CubeScene {
     constructor(window, canvas, material) {

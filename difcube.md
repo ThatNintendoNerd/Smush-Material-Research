@@ -5,6 +5,7 @@
 <style>
     #imgCanvas {
         width: 100%;
+        outline: none;
     }
 </style>
 
