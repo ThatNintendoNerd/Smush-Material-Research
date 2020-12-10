@@ -1,9 +1,11 @@
 import * as THREE from "./three.module.js";
-import { SphereScene } from "./spherescene.js";
+import { PerspectiveScene } from "./perspectivescene.js";
 import { OrbitControls } from "./orbitcontrols.js";
 
 class DifCubeDemo {
     constructor(window, canvas, difCubeDirectory) {
+        this.isLoaded = false;
+
         const manager = new THREE.LoadingManager();
 
         const cubeTexture = new THREE.CubeTextureLoader(manager)
@@ -53,12 +55,15 @@ class DifCubeDemo {
                 }
             });
 
-            that.scene = new SphereScene(window, canvas, that.material);
+            that.scene = new PerspectiveScene(window, canvas, that.material);
+            that.scene.sphere.visible = true;
             
             const controls = new OrbitControls(that.scene.camera, canvas);
             controls.enablePan = false;
             controls.enableZoom = false;
             controls.update();
+
+            that.isLoaded = true;
 
             const animate = function () {
                 that.scene.render();
@@ -67,6 +72,20 @@ class DifCubeDemo {
 
             animate();
         };
+    }
+
+    setSphere() {
+        if (this.isLoaded) {
+            this.scene.cube.visible = false;
+            this.scene.sphere.visible = true;
+        }
+    }
+
+    setCube() {
+        if (this.isLoaded) {
+            this.scene.cube.visible = true;
+            this.scene.sphere.visible = false;
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 import * as THREE from "./three.module.js";
-import { SphereScene } from "./spherescene.js";
+import { PerspectiveScene } from "./perspectivescene.js";
 
 class SssDemo {
     constructor(window, canvas, albedo, customVector11, customVector30x, customVector30y, metalness) {
@@ -58,34 +58,36 @@ class SssDemo {
             }
         });
 
-        this.sphereScene = new SphereScene(window, canvas, this.material);
+        // Draw a sphere.
+        this.scene = new PerspectiveScene(window, canvas, this.material);
+        this.scene.sphere.visible = true;
 
-        this.sphereScene.render();
+        this.scene.render();
     }
 
     updateAlbedo(value) {
         this.material.uniforms.albedo.value = new THREE.Color(value).convertSRGBToLinear();
-        this.sphereScene.render();
+        this.scene.render();
     }
 
     updateCustomVector11(value) {
         this.material.uniforms.CustomVector11.value = new THREE.Color(value).convertSRGBToLinear();
-        this.sphereScene.render();
+        this.scene.render();
     }
 
     updateMetalness(value) {
         this.material.uniforms.metalness.value = value;
-        this.sphereScene.render();
+        this.scene.render();
     }
 
     updateCustomVector30x(value) {
         this.material.uniforms.CustomVector30x.value = value;
-        this.sphereScene.render();
+        this.scene.render();
     }
 
     updateCustomVector30y(value) {
         this.material.uniforms.CustomVector30y.value = value;
-        this.sphereScene.render();
+        this.scene.render();
     }
 }
 

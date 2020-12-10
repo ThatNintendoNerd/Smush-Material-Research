@@ -1,6 +1,6 @@
 import * as THREE from "./three.module.js";
 import { loadCubeMapWithMipmapsAsync } from "./cubemap.js";
-import { SphereScene } from "./spherescene.js";
+import { PerspectiveScene } from "./perspectivescene.js";
 
 class PrmDemo {
     /**
@@ -148,8 +148,11 @@ class PrmDemo {
                 }
             });
 
-            that.sphereScene = new SphereScene(window, canvas, that.material);
-            that.sphereScene.render();
+            // Draw a sphere.
+            that.scene = new PerspectiveScene(window, canvas, that.material);
+            that.scene.sphere.visible = true;
+
+            that.scene.render();
             that.isLoaded = true;
         });
     }
@@ -157,35 +160,35 @@ class PrmDemo {
     updateAlbedo(value) {
         if (this.isLoaded) {
             this.material.uniforms.albedo.value = new THREE.Color(value).convertSRGBToLinear();
-            this.sphereScene.render();
+            this.scene.render();
         }
     }
 
     updateMetalness(value) {
         if (this.isLoaded) {
             this.material.uniforms.metalness.value = value;
-            this.sphereScene.render();
+            this.scene.render();
         }
     }
 
     updateRoughness(value) {
         if (this.isLoaded) {
             this.material.uniforms.roughness.value = value;
-            this.sphereScene.render();
+            this.scene.render();
         }
     }
 
     updateAmbientOcclusion(value) {
         if (this.isLoaded) {
             this.material.uniforms.ambientOcclusion.value = value;
-            this.sphereScene.render();
+            this.scene.render();
         }
     }
 
     updateSpecular(value) {
         if (this.isLoaded) {
             this.material.uniforms.specular.value = value;
-            this.sphereScene.render();
+            this.scene.render();
         }
     }
 }

@@ -1,9 +1,9 @@
 import * as THREE from "./three.module.js"
 
 /**
- * Stores the state necessary for drawing a textured quad.
+ * Stores the state necessary for drawing a scene with a perspective camera.
  */
-class SphereScene {
+class PerspectiveScene {
     constructor(window, canvas, material) {
         this.renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -12,10 +12,10 @@ class SphereScene {
         });
         this.updateRenderDimensions(window);
 
-        const sphereScene = this;
+        const that = this;
         window.addEventListener('resize', function () {
-            sphereScene.updateRenderDimensions(window);
-            sphereScene.render();
+            that.updateRenderDimensions(window);
+            that.render();
         });
 
         this.scene = new THREE.Scene();
@@ -23,9 +23,14 @@ class SphereScene {
         this.camera = new THREE.PerspectiveCamera(75, 1.0, 0.1, 1000);
         this.camera.position.z = 2;
 
-        const geometry = new THREE.SphereGeometry(1, 32, 32);
-        const sphere = new THREE.Mesh(geometry, material);
-        this.scene.add(sphere);
+        this.cube = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), material);
+        this.sphere = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32), material);
+
+        this.cube.visible = false;
+        this.sphere.visible = false;
+        
+        this.scene.add(this.cube);
+        this.scene.add(this.sphere);
     }
 
     render() {
@@ -45,4 +50,4 @@ class SphereScene {
     };
 }
 
-export { SphereScene };
+export { PerspectiveScene };
