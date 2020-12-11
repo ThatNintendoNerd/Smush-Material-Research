@@ -20,3 +20,4 @@ the values aren't gamma corrected.
 ### Transition Blend Map (<span style="color:blue">Blue</span>)
 
 ### Cavity Map (Alpha)
+<img src="{{ "/assets/images/nor/mario_cavity.jpg" | relative_url }}" height="auto" width="auto">

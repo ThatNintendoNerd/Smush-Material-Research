@@ -69,6 +69,7 @@ maps to raw, non color data, or linear to ensure
 the values aren't gamma corrected.
 
 ### Metalness (<span style="color:red">Red</span>)
+<img src="{{ "/assets/images/prm/mario_metalness.jpg" | relative_url }}" height="auto" width="auto">
 Metalness determines whether a surface is metallic or not and affects both specular and diffuse shading.
 In general, materials should be either fully metallic (1.0) or non metallic (0.0).
 Values in between 0.0 and 1.0 enable smoother blending between metallic and non metallic regions of a model.
@@ -82,6 +83,7 @@ Skin materials are a special case and instead use the metalness map as a mask fo
 See the [Skin Materials](skin_materials) page for details.
 
 ### Roughness (<span style="color:green">Green</span>)
+<img src="{{ "/assets/images/prm/mario_roughness.jpg" | relative_url }}" height="auto" width="auto">
 Roughness affects the size of the specular highlight. Rougher surfaces have larger specular highlights than glossy
 surfaces.
 
@@ -96,6 +98,7 @@ that are much darker than a glossy screen. Compare roughness values of 0.0, 0.25
 the changes in both the size and brightness of the specular highlight.
 
 ### Ambient Occlusion (<span style="color:blue">Blue</span>)
+<img src="{{ "/assets/images/prm/mario_ao.jpg" | relative_url }}" height="auto" width="auto">
 Ambient occlusion simulates the shadowing of occluded surfaces that would be difficult to recreate using traditional
 lighting and
 shadowmapping in game. These maps can be baked using the existing model or from a higher detailed version of the model
@@ -107,6 +110,7 @@ Ambient occlusion affects the intensity of specular and diffuse ambient lighting
 differences between setting ambient occlusion to 0.0 for metallic and non metallic materials.
 
 ### Specular (Alpha)
+<img src="{{ "/assets/images/prm/mario_specular.jpg" | relative_url }}" height="auto" width="auto">
 Specular controls the specular reflectivity of a surface. This effects the brightness of specular highlights and 
 cube map reflections. 
 
