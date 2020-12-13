@@ -18,6 +18,8 @@ the values aren't gamma corrected.
 ### Normal Map Y+ (<span style="color:green">Green</span>)
 
 ### Transition Blend Map (<span style="color:blue">Blue</span>)
+The blue channel contains the transition blend map used for transitioning between materials. 
+See [Material Transitions](material_transitions) for details and an interactive demo.
 
 ### Cavity Map (Alpha)
 <img src="{{ "/assets/images/nor/mario_cavity.jpg" | relative_url }}" height="auto" width="auto">

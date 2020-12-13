@@ -1,14 +1,11 @@
 ---
 ---
 # Getting Started
-This site contains tutorials on various material, texture, and rendering related topics for Smash Ultimate. 
-The tutorials, demos, and other documentation can be accessed from the top menu.
-Many of these have interactive demos using WebGL, which should work on most computers, phones, and tablets.  
+The tutorials, demos, and other documentation for rendering in Smash Ultimate can be accessed from the top navigation menu.
+Many of these pages contain interactive demos using WebGL, which should work on most computers, phones, and tablets. The [Col](col), [PRM](prm), and [NOR](nor) texture pages are a good starting point. 
 
-The documentation items link to the documentation pages on the main repository. These pages are more concise and not targeted at beginners. 
-Check these links for up to date information, including topics not covered on this site.
+The documentation navigation menu items link to the documentation pages on the main repository. These pages are more concise and not targeted at beginners. Check these links for up to date information, including topics not covered on this site.
 
-## CustomVectorParam Swizzling
 CustomVector parameters have 4 values. These values are floating point numbers like 0.0, -200.4, or 1.3333. 
 The 4 values will be referred to as XYZW or RGBA depending for convenience. For example, CustomVector11.g or CustomVector11.y both refer to the second value for CustomVector11. 
 CustomVector11.w or CustomVector11.a both refer to the fourth value. Mixing and matching representations in the same context will be avoided where possible.
