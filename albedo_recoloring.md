@@ -23,9 +23,8 @@ Select a new albedo color to see the armor on the render update in real time.
 
 ## Details
 This technique approximates well how fully metallic objects are rendered in game (PRM red channel is 1.0) because
-metallic objects have no diffuse component. The results for non metallic materials still match the desired albedo
-consistently,
-but there may be discolorations. Potential fixes will are discussed in the image editing section.
+metallic objects have no diffuse component. The results for non metallic materials will still match the desired overall luminance,
+but there may be discolorations. Potential fixes are discussed in the image editing section.
 
 ### How to Determine Albedo Color
 The albedo values can be copied from the Col maps for non skin materials. For skin materials, copy paste the values from

@@ -18,11 +18,27 @@
             <a class="dropdown-item" href="{{ "/nor" | relative_url }}">NOR Maps</a>
             <a class="dropdown-item" href="{{ "/emi" | relative_url }}">Emissive Maps</a>
             <a class="dropdown-item" href="{{ "/difcube" | relative_url }}">Diffuse Cube Maps</a>
+            <a class="dropdown-item" href="{{ "/color_grading" | relative_url }}">Color Grading LUTs</a>
           </div>
         </div>
-        <a class="nav-link nav-item" href="{{ "/albedo_recoloring" | relative_url }}">Albedo Recoloring</a>
-        <a class="nav-link nav-item" href="{{ "/skin_materials" | relative_url }}">Skin Materials</a>
-        <a class="nav-link nav-item" href="{{ "/material_transitions" | relative_url }}">Material Transitions</a>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Materials
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{ "/skin_materials" | relative_url }}">Skin Materials</a>
+            <a class="dropdown-item" href="{{ "/alpha_blending" | relative_url }}">Alpha Blending</a>
+            <a class="dropdown-item" href="{{ "/material_transitions" | relative_url }}">Material Transitions</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Renders
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{ "/albedo_recoloring" | relative_url }}">Albedo Recoloring</a>
+          </div>
+        </div>
         <div class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Documentation
