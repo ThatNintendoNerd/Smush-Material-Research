@@ -5,7 +5,7 @@ class AlbedoRecoloringDemo {
     /**
      * Initializes the albedo coloring demo. 
      * A single frame is rendered once all textures are loaded.
-     * @param {*} window 
+     * @param {*} window the window used for drawing
      * @param {*} canvas the canvas used for drawing
      * @param {*} renderImgPath the path of the render to recolor
      * @param {*} maskImgPath the path of the mask for the region to recolor
