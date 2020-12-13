@@ -65,6 +65,10 @@ float sssBlend = CustomVector30.x * metalness;
 ```
 
 ## Albedo Color
+<figure class="figure">
+    <img src="{{ "/assets/images/albedo/ivysaur_albedo.jpg" | relative_url }}" height="auto" width="auto">
+    <figcaption class="figure-caption text-center">Ivysaur's col map (left), CustomVector11.rgb (center), and calculated albedo color (right)</figcaption>
+</figure>
 The RGB values for CustomVector11 control the subsurface color. This is typically a dark red color to approximate skin.
 Bright colors will likely cause unwanted bloom.
 The albedo color is calculated using the col map color as well as CustomVector11's color.
