@@ -28,7 +28,7 @@ almost completely white in game, for example.
 The [Albedo Recoloring](albedo_recoloring), [PRM](prm), and [Skin Materials](skin_materials) pages all have demos that demonstrate the effects of editing the model's albedo color.
 
 ### Opacity (Alpha)
-The alpha channel of the col map controls the opacity of the model. A value of 0.0 is completely transparent, and a value of 1.0 is completely opaque. Values in between 0.0 and 1.0 create a translucent effect. Not all materials have alpha blending enabled. See the 
+The alpha channel of the col map controls the opacity of the model. A value of 0.0 is completely transparent, and a value of 1.0 is completely opaque. Values in between 0.0 and 1.0 create a partially transparent effect. Not all materials have alpha blending enabled. See the 
 [Alpha Blending](alpha_blending) page for details.
 
 ## Col Map Naming Conventions
