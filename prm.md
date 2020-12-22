@@ -128,13 +128,13 @@ Metals work differently and use the albedo color from the col map as the specula
 tinted by the albedo color. Specular reflectivity is not scaled by 0.2 for metals, so metals can be significantly more reflective.
 A metalness of 1.0 with an albedo set to white will look similar to chrome.
 
-## PRM Compatibility Details
+# PRM Compatibility Details
 In general, PRM maps aren't identical to the PBR textures used in other games and applications, so models will look
 slightly different when PRM maps are used in Blender Cycles or Unreal Engine, for example. This section covers the
 necessary technical details for accurately adapting PRM maps to work in other sources or adapting PBR textures from
 other sources to work similarly in Smash Ultimate.
 
-### Converting Metalness
+## Converting Metalness
 PRM metalness maps are generally compatible between different games and applications. Some applications use separate
 materials
 for metals like gold or chrome and non metals. In that case, assume anything with a PRM metalness close to 1.0 is fully
@@ -150,7 +150,7 @@ Skin materials in Smash Ultimate are a special case in that they aren't actually
 standard non metallic material and use the PRM metalness map to control subsurface scattering intensity. Similarly,
 maps that mask subsurface scattering can be used as a metalness maps for skin materials in Smash Ultimate.
 
-### Converting Roughness
+## Converting Roughness
 Smash Ultimate squares it's roughness values, which is common in other PBR renderers. Use this page as a reference to
 match roughness values between Smash Ultimate
 and other PBR textures. Roughness has values between 0.0 and 1.0, so squaring has the biggest impact on on values closer
@@ -163,7 +163,7 @@ Smash Ultimate clamps roughness values to 0.01 to avoid dividing by 0.0 in the s
 case that may be handled differently by different applications.
 In general, try to use roughness values close to 0.01 instead of 0.0 for extremely smooth surfaces.
 
-### Converting Ambient Occlusion
+## Converting Ambient Occlusion
 Ambient occlusion can be baked and/or painted by hand. Some games have very dark ambient occlusion maps that may not
 work well with Smash Ultimate's lighting.
 In that case, the original ambient occlusion map can be rebaked, adjusted to be lighter, or set to white (1.0) if the
@@ -175,18 +175,45 @@ If the PRM ambient occlusion map contains detail not present in the model's geom
 color can be multiplied by the
 ambient occlusion to achieve a similar effect.
 
-### Converting Specular
+## Converting Specular
 Specular defines the reflectance at normal. This may also be referred to as "f0" or "F0" in some applications.
-The specular values are scaled by 0.2, so a specular of 1.0 in Smash Ultimate to a reflectance at normal of 0.2 and 0.0
-still corresponds to 0.0.
+The specular values are scaled by 0.2, so a specular of 1.0 in Smash Ultimate corresponds to a reflectance at normal of 0.2 and 0.0
+still corresponds to 0.0. 
 
+### Convert Smash Ultimate's Specular to Blender
 It's common for applications to define their own specular scale. Blender's Principled BSDF has a specular range of 0% to
 8%, so the PRM specular should be converted as
-`blender_specular = smash_specular / 0.2 * 0.08`. The reverse direction can be computed as `smash_specular =
-blender_specular / 0.08 * 0.2`.
+```
+blenderSpecular = smashSpecular / 2.5
+``` 
+Image editors don't support 
+dividing by colors greater than 1.0 by default. Use a fill layer with color (0,0,40) in HSL or (102,102,102) in RGB
+set to the multiply blend mode instead. This is equivalent to dividing by 2.5. 
 
+- Fill Layer (Multiply)
+- Specular
+
+### Convert Blender's Specular to Smash Ultimate
+Converting Blender's specular to Smash Ultimate can be computed as
+```
+smashSpecular = blenderSpecular * 2.5
+```
+Image editors don't support multiplying by colors greater than 1.0 by default. Use a fill layer with color (0,0,40) in HSL or (102,102,102) in RGB set to the divide blend mode instead. This is equivalent to multiplying by 2.5. 
+
+- Fill Layer (Divide)
+- Specular
+
+If the application doesn't support the divide blend mode, set the fill layer color to (0,0,60) in HSL or (153,153,153) in RGB. 
+
+- Fill Layer (Color Dodge)
+- Specular
+
+### Convert IOR to Smash Ultimate Specular
 Some applications may use <abbr title="Index of Reflection/Refraction">IOR</abbr> instead of specular.
-
+IOR values can be converted using the following formula.
+```
+smashSpecular = ((1 - ior) / (1 + ior)) ^ 2 * 0.2
+```
 
 <script type="module">
     import { PrmDemo } from "./assets/javascript/prm.js";
