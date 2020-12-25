@@ -84,7 +84,9 @@ mode to color dodge. This performs the same operation as divide.
 - Base Render
 
 ## Examples
-<img src="{{ "/assets/images/albedo_recoloring/corrin_m_c04.jpg" | relative_url }}" height="auto" width="auto">
+<div class="col-lg-7">
+    <img class="img-fluid" src="{{ "/assets/images/albedo_recoloring/corrin_m_c04.jpg" | relative_url }}">
+</div>
 
 ## Further Reading
 For custom renders, there are more render passes available that can perfectly recreate the final render.
