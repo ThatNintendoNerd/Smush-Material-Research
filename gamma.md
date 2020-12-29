@@ -36,18 +36,53 @@ The SRGB colorspace defines a transfer function that is similar but not identica
 The texture's format tells the game how to interpret the texture's data for use in the shaders. The format should match the type of data stored in the texture and it's intended usage. The process of converting the integer values from integer formats to floating point is called *normalization*. 
 See the OpenGL wiki's <a href="https://www.khronos.org/opengl/wiki/Normalized_Integer" target="_blank">normalized integer page</a> for technical details. 
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col" class="w-25">Texture</th>
+            <th scope="col">Recommended Format</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Col (Texture0/Texture1)</td>
+            <td>BC7_Srgb</td>
+        </tr>
+        <tr>
+            <td>NOR (Texture4)</td>
+            <td>BC7_Unorm</td>
+        </tr>
+        <tr>
+            <td>EMI (Texture5/Texture14)</td>
+            <td>BC7_Srgb</td>
+        </tr>
+        <tr>
+            <td>PRM (Texture6)</td>
+            <td>BC7_Unorm</td>
+        </tr>
+    </tbody>
+</table>
+
+
 # TODO: data doesn't change when saving as the same compression type with unorm vs srgb
 
+### SRGB
+<div class="col-lg-7">
+    <img class="img-fluid" src="{{ "/assets/images/gamma/srgb_to_float.png" | relative_url }}">
+</div>
+Textures with SRGB formats store nonlinear color data. The texture values are converted to linear floating point values in the range 0.0 to 1.0 using the SRGB transfer function. The conversion from the SRGB texture values directly to floating point doesn't introduce any of the artifacts caused by applying the adjustment manually in an image editor.  
+Textures with color data such as col maps and diffuse maps must be saved as SRGB to render correctly in game. The shader values are assumed to use linear gamma, so the final conversion back to SRGB to display the colors on screen will cause color textures saved without an SRGB format to look washed out.
+
 ### UNorm (Unsigned Normalized)
-# TODO: Graph
-Textures with unorm formats are converted to floating point by dividing by the max value. 8 bit values are divided by 255, 16 bit values are divided by 16355, etc. This converts unsigned integer values to floating point values in the range 0.0 to 1.0. 
-Textures that don't store color data, such as NOR maps and PRM maps, must be saved as UNorm to render correctly in game.
+<div class="col-lg-7">
+    <img class="img-fluid" src="{{ "/assets/images/gamma/unorm_to_float.png" | relative_url }}">
+</div>
+Textures with unorm formats store linear data and are converted to floating point by simply dividing by the type's max value. 8 bit values are divided by 255, 16 bit values are divided by 16355, etc. This converts unsigned integer values to floating point values in the range 0.0 to 1.0. Textures that don't store color data, such as NOR maps and PRM maps, must be saved as UNorm to render correctly in game.
 
 ### SNorm (Signed Normalized)
-# TODO: Graph
-Textures with SNorm formats are converted to floating point values in the range -1.0 to 1.0. These formats aren't as common as UNorm or SRGB. 
+<div class="col-lg-7">
+    <img class="img-fluid" src="{{ "/assets/images/gamma/snorm_to_float.png" | relative_url }}">
+</div>
+Textures with SNorm formats are converted to floating point values in the range -1.0 to 1.0. These formats aren't as common as Unorm or SRGB. 
 
-### SRGB
-# TODO: Graph
-Textures with SRGB formats are assumed to contain data in the SRGB colorspace. The texture values are converted to linear floating point values in the range 0.0 to 1.0 using the SRGB transfer function. The conversion from the SRGB texture values directly to floating point doesn't introduce any of the artifacts caused by applying the adjustment manually in an image editor.  
-Textures with color data such as col maps and diffuse maps must be saved as SRGB to render correctly in game. The shader values are assumed to use linear gamma, so the final conversion back to SRGB to display the colors on screen will cause color textures saved without an SRGB format to look washed out.
+
