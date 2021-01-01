@@ -43,6 +43,10 @@ The texture format must match the type of data stored in the texture for the tex
             <td>EMI (Texture5/Texture14)</td>
             <td>sRGB</td>
         </tr>
+        <tr>
+            <td>Chara UI</td>
+            <td>sRGB</td>
+        </tr>
     </tbody>
 </table>
 
