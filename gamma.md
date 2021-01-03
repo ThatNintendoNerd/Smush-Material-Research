@@ -45,24 +45,30 @@ The texture format must match the type of data stored in the texture for the tex
         </tr>
         <tr>
             <td>Chara UI</td>
-            <td>sRGB</td>
+            <td>sRGB<sup><a href="#fn1" id="ref1">1</a></sup></td>
         </tr>
     </tbody>
 </table>
+<sup id="fn1">1. The in game chara UI files use a linear format and save the texture with manually darkened pixel values. This results in noticeable 
+quality loss compared to using an sRGB format. 
+</sup>
 
 ### Manual Gamma Correction Hacks
 <figure class="figure">
     <img src="{{ "/assets/images/gamma/palu_comparison.png" | relative_url }}" height="auto" width="auto">
-    <figcaption class="figure-caption text-center">Naive gamma fixing in an image editor (left) compared to saving an unedited image as sRGB (right). 
+    <figcaption class="figure-caption text-center">The final rendered color for naive gamma fixing in an image editor (left) compared to saving the image as sRGB (right). 
         Note the artifacts in the shadows on the left image.</figcaption>
 </figure>
-Avoid trying to "fix" the texture gamma manually in an image editor. The final result after applying the gamma or levels adjustment is still only stored using 8 bits, 
+Avoid trying to "fix" the texture gamma manually in an image editor. The inverse sRGB adjustment applied before the final color is displayed on screen is not the same as 
+a gamma adjustment of (1.0 / 2.2), so the final color will not be correct if the texture was darkened using a gamma of 2.2 and saved as unorm. 
+The result after applying a gamma or levels adjustment is still only stored using 8 bits per color channel, 
 which produces noticeable banding artifacts in game such as in the above image. The artifacts caused by manually gamma correcting textures but saving as a linear format is most noticeable in darker tones on compressed textures.
 Saving the texture using an sRGB format performs the correct gamma conversion using floating point and won't introduce any noticeable quality loss.  
 
 ## Texture Formats 
 The texture's format tells the game how to interpret the texture's data for use in the shaders. The format should match the type of data stored in the texture and it's intended usage. 
-The process of converting the integer values from integer formats to floating point is called *normalization*. 
+Changing the format modifier at the end of the format name such as "BC7_SRGB" vs "BC7_UNORM" just indicates how to convert the texture values to float and does not change the texture data or file size.
+The process of converting the integer values to floating point is called *normalization*. 
 See the OpenGL wiki's <a href="https://www.khronos.org/opengl/wiki/Normalized_Integer" target="_blank">normalized integer page</a> for technical details. 
 
 Textures need to be saved with the correct format to appear correctly in game. Saving with the wrong format will result in the texture appearing 
@@ -95,7 +101,7 @@ so textures storing color data should also use a format with "sRGB" as part of t
 </div>
 Textures with unorm formats store linear data and are converted to floating point by simply dividing by the type's max value. 
 8 bit values are divided by 255, 16 bit values are divided by 16355, etc. This converts unsigned integer values to floating point values in the range 0.0 to 1.0. 
-Textures that don't store color data, such as NOR maps and PRM maps, must be saved as UNorm to render correctly in game.
+Textures that don't store color data, such as NOR maps and PRM maps, must be saved as unorm to render correctly in game.
 
 ### Snorm (Signed Normalized / Linear Signed)
 <div class="row">
@@ -106,6 +112,6 @@ Textures that don't store color data, such as NOR maps and PRM maps, must be sav
         <img class="img-fluid" src="{{ "/assets/images/gamma/snorm_to_float.png" | relative_url }}">
     </div>
 </div>
-Textures with Snorm formats are converted to floating point values in the range -1.0 to 1.0. These formats aren't as common as unorm or sRGB. 
+Textures with snorm formats are converted to floating point values in the range -1.0 to 1.0. These formats aren't as common as unorm or sRGB. 
 
 
