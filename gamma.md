@@ -1,13 +1,13 @@
 ---
 ---
 # Texture Gamma Encoding
-The shader programs used to render the character models, stages, and even the UI elements perform almost all of their 
+The shader programs used to draw the character models, stages, and even the UI elements perform almost all of their 
 calculations in floating point. Floating point numbers can store numbers with a range of intensities at high precision such as 
 0.5, 1.0003, etc. 
 
-Image textures, on the other hand, typically use 8 bit unsigned integers for each color channel to save space compared to the 32 bits required to store a 
-floating point number. HTML/Hex colors, for example, also only use 8 bit unsigned integers for each color channel. The texture's format not only describes
- the type of compression used to store the data but also how to convert the RGB values to floating point when accessed by the shaders. 
+Image textures, on the other hand, typically use 8 bit unsigned integers for each color channel (similar to HTML/Hex colors) to save space compared to the 32 bits required to store a 
+floating point number. The integer values in the texture 
+are converted to floating point values based on the texture's format.
 
 ## Recommended Formats 
 The texture format must match the type of data stored in the texture for the texture to render correctly in game.
@@ -47,14 +47,11 @@ The texture format must match the type of data stored in the texture for the tex
 </table>
 
 ### Manual Gamma Correction Hacks
-<div class="row">
-    <div class="col-md-6 d-flex align-items-center justify-content-center">
-        <img class="img-fluid" src="{{ "/assets/images/gamma/palu_comparison.png" | relative_url }}">
-    </div>
-    <div class="col-md-6 d-flex align-items-center justify-content-center">
-        <img class="img-fluid" src="{{ "/assets/images/gamma/byleth_comparison.png" | relative_url }}">
-    </div>
-</div>
+<figure class="figure">
+    <img src="{{ "/assets/images/gamma/palu_comparison.png" | relative_url }}" height="auto" width="auto">
+    <figcaption class="figure-caption text-center">Naive gamma fixing in an image editor (left) compared to saving an unedited image as sRGB (right). 
+        Note the artifacts in the shadows on the left image.</figcaption>
+</figure>
 Avoid trying to "fix" the texture gamma manually in an image editor. The final result after applying the gamma or levels adjustment is still only stored using 8 bits, 
 which produces noticeable banding artifacts in game such as in the above image. The artifacts caused by manually gamma correcting textures but saving as a linear format is most noticeable in darker tones on compressed textures.
 Saving the texture using an sRGB format performs the correct gamma conversion using floating point and won't introduce any noticeable quality loss.  
