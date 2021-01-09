@@ -16,7 +16,7 @@ the values aren't gamma corrected.
 ### Normal Map X+, Y+ (<span style="color:red">Red</span>, <span style="color:green">Green</span>)
 <figure class="figure">
 <img src="{{ "/assets/images/nor/mario_normal.jpg" | relative_url }}" height="auto" width="auto">
-    <figcaption class="figure-caption text-center">The model with a blank NOR map (left), the calculated normal map (center), and the model with the NOR map (right)</figcaption>
+    <figcaption class="figure-caption text-center">The model with a blank NOR map (left), the XY channels from the NOR map and calculated z channel (center), and the model with the NOR map (right)</figcaption>
 </figure>
 The red channel contains the x component of the tangent space normal. A value of 1.0 is positive x, 0.0 is negative x, and 0.5 has no effect. 
 

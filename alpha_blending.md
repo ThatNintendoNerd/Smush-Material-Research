@@ -33,5 +33,6 @@ regardless of the parent model. In general, meshes with alpha blending should us
 1. _opaque
 2. _far
 3. _sort
-4. *bloom and post processing*
+4. *bloom*
 5. _near
+6. *post processing*
