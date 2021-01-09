@@ -1,7 +1,7 @@
 ---
 ---
-# Diffuse Cube Maps (Texture8) - WIP
-Diffuse cube maps are used for special materials that use an environment cube map to color the model. 
+# Diffuse Cube Maps (Texture8)
+Diffuse cube maps are used for special materials that use an environment cube map to color the model such as the stage editor backgrounds. 
 Click and drag on desktop or touch and drag on mobile to orbit the camera in the demo below. Switch between a sphere and cube 
 to see the impact of different geometry on the resulting reflections.
 
@@ -35,9 +35,8 @@ to see the impact of different geometry on the resulting reflections.
 
 ## Diffuse Cube Map Channels
 ### Color (<span style="color:red">R</span><span style="color:green">G</span><span style="color:blue">B</span>)
+The RGB color of the diffuse cube map is used to determine the model's color.
 
-
-### Opacity (Alpha)
 
 <script type="module">
     import { DifCubeDemo } from "./assets/javascript/difcube.js";
