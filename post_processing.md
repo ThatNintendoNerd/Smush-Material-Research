@@ -20,6 +20,10 @@ has an identical corresponding texture value of (R,G,B), the texture has no effe
 color grading LUTs is that any image editing operations that don't target individual pixels such as curves, levels, exposure, color balance, hsl, etc applied to the LUT will also apply to the final image. 
 
 ## Post Processing Pass 
+<figure class="figure">
+    <img src="{{ "/assets/images/post_processing/post_processing.jpg" | relative_url }}" height="auto" width="auto">
+    <figcaption class="figure-caption text-center">The base image (left), the image after applying bloom (center), and the final image after post processing (right)</figcaption>
+</figure>
 Smash Ultimate applies an additional post processing pass after bloom and the color grading LUT has been applied. This step brightens the overall image significantly. The resulting image is roughly 1.4x brighter. The exact code is below. 
 
 ```glsl
