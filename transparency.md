@@ -1,14 +1,18 @@
 ---
 ---
-# Alpha Blending - WIP
+# Transparency - WIP
+## Alpha Blending
 Smash Ultimate uses alpha blending to simulate the appearance of transparent or translucent materials such as water, glass, smoke, etc. 
 A background color called the "destination color" or "dst color" is blended with a foreground color called the "source color" or "src color". The effect is very similar to layer blend modes in Gimp or Photoshop. 
 
-## Blend Modes 
+### Alpha Blending Blend Modes 
 The alpha blending parameters are controlled by BlendState0 in the materials. The material's source factor 
 and destination factor are controlled by the first and third value for BlendState0, respectively. 
 
 See the <a href="https://github.com/ScanMountGoat/Smush-Material-Research/blob/master/Material%20Parameters.md#blending-state" target="_blank">BlendState0 documentation</a> for information on additional blending parameters a more complete list of possible blending factors.
+
+### Alpha Blending Presets
+
 
 ## Alpha Testing 
 Alpha testing skips rendering any pixels that have an alpha value less than a certain threshold. The texture's alpha channel acts as a mask to "cut out" transparent regions of the model. This avoids the sorting issues with alpha blending but can only be used for making regions of a model completely opaque or completely transparent. This works well for hair, leaves, or other materials that would 
@@ -24,6 +28,11 @@ float alpha = max(texture.a, CustomVector0.x);
 if (alpha < 0.5)
     discard;
 ```
+
+## Alpha Sample to Coverage
+
+
+
 
 ## Render Order
 The order in which different meshes for a model are rendered depends on the shader label. The tag at the end of the shader label 
