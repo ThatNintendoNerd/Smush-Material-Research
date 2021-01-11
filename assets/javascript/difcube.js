@@ -61,11 +61,13 @@ class DifCubeDemo {
             const controls = new OrbitControls(that.scene.camera, canvas);
             controls.enablePan = false;
             controls.enableZoom = false;
+            controls.autoRotate = true;
             controls.update();
 
             that.isLoaded = true;
 
             const animate = function () {
+                controls.update();
                 that.scene.render();
                 requestAnimationFrame(animate);
             }
