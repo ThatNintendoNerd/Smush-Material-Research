@@ -7,7 +7,8 @@
     }
 </style>
 
-# Post Processing - WIP
+# Post Processing
+Smash Ultimate contains a few post processing steps that grealy impact the final look of the image after all the models and effects are rendered. Post processing does not affect the color of UI elements such as stock icons and character portraits.
 
 ## Bloom 
 Bloom adds a glow around bright parts of the image. Any pixel in the frame that is brighter than a certain threshold contributes to bloom. The brighter the pixel, the more intense the bloom. The bloom threshold is calculated as follows. 
@@ -37,6 +38,11 @@ has an identical corresponding texture value of (R,G,B), the texture has no effe
     <figcaption class="figure-caption text-center">The result of editing the color_grading_lut.nutexb for Dreamland GB using a gradient map. The 16 slices of the LUT are displayed on the top of the image.</figcaption>
 </figure>
 A useful property of color grading LUTs is that any image editing operations that don't target individual pixels such as curves, levels, exposure, color balance, HSL, gradient maps, etc applied to the LUT will also apply to the final image. Simply apply the adjustments to a neutral color grading LUT and then save the result. A tool and instructions for creating color grading LUTs is available on the <a href="https://github.com/ScanMountGoat/Smush-LUT" target="_blank">Smush LUT Github repository</a>.
+
+### Limitations 
+The textures are only 16x16x16 and use linear filtering, so it's not possible to have a completely cel shaded look. The LUTs are similar to a gradient map or color ramp with 16 steps but in 3d. The final color is a blend of the nearest colors in the 16x16x16 grid of points. 
+
+The LUT applies to all models and effects on screen except for UI. A LUT with every pixel set to black will result in a black image with only the UI visible.  
 
 ## Post Processing Pass 
 <figure class="figure">

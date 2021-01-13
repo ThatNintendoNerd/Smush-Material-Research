@@ -15,6 +15,7 @@ CustomVector11.w or CustomVector11.a both refer to the fourth value. Mixing and 
 - <a href="https://github.com/Ploaj/SSBHLib/releases" target="_blank">Mat Lab</a> - CLI tool for editing materials as XML
 - <a href="https://github.com/Ploaj/StudioSB/releases/tag/LatestCommit" target="_blank">Studio SB</a> - create and view model imports
 - <a href="https://github.com/KillzXGaming/Switch-Toolbox" target="_blank">Switch Toolbox</a> - edit BNTX and NUTEXB files
+- <a href="https://github.com/ScanMountGoat/Smush-LUT" target="_blank">Smush LUT</a> - edit color_grading_lut.nutexb files
 
 # Support
 Report any bugs in [issues](https://github.com/ScanMountGoat/Smush-Material-Research/issues) if one of the links is broken or a page isn't rendering correctly.
