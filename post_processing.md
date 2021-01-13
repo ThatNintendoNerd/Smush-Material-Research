@@ -1,5 +1,12 @@
 ---
 ---
+<style>
+    .pixelated {
+        -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: pixelated;
+    }
+</style>
+
 # Post Processing - WIP
 
 ## Bloom 
@@ -15,8 +22,8 @@ The graph below demonstrates the bloom intensity for different brightness values
 
 
 ## Color Grading LUTs
-<figure class="figure">
-<img src="{{ "/assets/images/post_processing/neutral_lut.png" | relative_url }}" height="auto" width="100%">
+<figure class="figure col">
+    <img src="{{ "/assets/images/post_processing/neutral_lut.png" | relative_url }}" height="auto" width="100%" class="pixelated">
     <figcaption class="figure-caption text-center">A neutral color grading LUT. Each of the 16 layers are separated into indivudal 16x16 slices for display.</figcaption>
 </figure>
 Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the snapshot filters. The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The texture data is a 16x16x16 RGB cube where the eight corners of the cube correspond to black, red, green, blue, cyan, magenta, and white.  
