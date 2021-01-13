@@ -15,11 +15,21 @@ The graph below demonstrates the bloom intensity for different brightness values
 
 
 ## Color Grading LUTs
-Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the snapshot filters. The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The <a href="https://docs.unrealengine.com/en-US/RenderingAndGraphics/PostProcessEffects/UsingLUTs/index.html" target="_blank">Unreal Engine Docs</a> have a good description of how a 3D LUT can be used to perform color grading.  *There is no way to edit these textures at this time without hex editing*. 
+<figure class="figure">
+<img src="{{ "/assets/images/post_processing/neutral_lut.png" | relative_url }}" height="auto" width="100%">
+    <figcaption class="figure-caption text-center">A neutral color grading LUT. Each of the 16 layers are separated into indivudal 16x16 slices for display.</figcaption>
+</figure>
+Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the snapshot filters. The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The texture data is a 16x16x16 RGB cube where the eight corners of the cube correspond to black, red, green, blue, cyan, magenta, and white.  
 
-Each input color is used as 3d texture coordinates for the color grading LUT. If every set of 3d texture coordinates (R,G,B)
-has an identical corresponding texture value of (R,G,B), the texture has no effect on the final image color. A useful property of 
-color grading LUTs is that any image editing operations that don't target individual pixels such as curves, levels, exposure, color balance, HSL, gradient maps, etc applied to the LUT will also apply to the final image. Simply apply the adjustments to a neutral color grading LUT and then save the result. 
+Each input RGB color is used as XYZ coordinates for the color grading LUT. The texture uses linear filtering to interpolate between points on the LUT If every set of 3d texture coordinates (R,G,B)
+has an identical corresponding texture value of (R,G,B), the texture has no effect on the final image color. The <a href="https://docs.unrealengine.com/en-US/RenderingAndGraphics/PostProcessEffects/UsingLUTs/index.html" target="_blank">Unreal Engine Docs</a> have a good description of how a 3D LUT can be used to perform color grading.
+
+### Editing Color Grading LUTs
+<figure class="figure">
+<img src="{{ "/assets/images/post_processing/dreamland_lut.jpg" | relative_url }}" height="auto" width="auto">
+    <figcaption class="figure-caption text-center">The result of editing the color_grading_lut.nutexb for Dreamland GB using a gradient map. The 16 slices of the LUT are displayed on the top of the image.</figcaption>
+</figure>
+A useful property of color grading LUTs is that any image editing operations that don't target individual pixels such as curves, levels, exposure, color balance, HSL, gradient maps, etc applied to the LUT will also apply to the final image. Simply apply the adjustments to a neutral color grading LUT and then save the result. A tool and instructions for creating color grading LUTs is available on the <a href="https://github.com/ScanMountGoat/Smush-LUT" target="_blank">Smush LUT Github repository</a>.
 
 ## Post Processing Pass 
 <figure class="figure">
