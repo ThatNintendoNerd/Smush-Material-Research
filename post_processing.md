@@ -8,7 +8,12 @@
 </style>
 
 # Post Processing Passes
-Smash Ultimate contains a few post processing steps that grealy impact the final look of the image after all the models and effects are rendered. Post processing does not affect the color of UI elements such as stock icons and character portraits.
+Smash Ultimate contains a few post processing steps that grealy impact the final look of the image after all the models and effects are rendered. Post processing does not affect the color of UI elements such as stock icons and character portraits. The steps are applied in the following order. 
+
+1. Model and effect rendering
+2. Add bloom 
+3. Apply color grading LUT 
+4. Post process to brighten the image 
 
 ## Bloom 
 Bloom adds a glow around bright parts of the image. Any pixel in the frame that is brighter than a certain threshold contributes to bloom. The brighter the pixel, the more intense the bloom. The bloom threshold is calculated as follows. 
@@ -25,24 +30,22 @@ The graph below demonstrates the bloom intensity for different brightness values
 ## Color Grading LUTs
 <figure class="figure col">
     <img src="{{ "/assets/images/post_processing/neutral_lut.png" | relative_url }}" height="auto" width="100%" class="pixelated">
-    <figcaption class="figure-caption text-center">A neutral color grading LUT. Each of the 16 layers are separated into indivudal 16x16 slices for display.</figcaption>
+    <figcaption class="figure-caption text-center">A neutral color grading LUT. Each of the 16 layers are separated into individual 16x16 slices for display.</figcaption>
 </figure>
-Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the [snapshot filters](snapshot). The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The texture data is a 16x16x16 RGB cube where the eight corners of the cube correspond to black, red, green, blue, cyan, magenta, and white.  
+Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the [snapshot filters](snapshot). The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The <a href="https://docs.unrealengine.com/en-US/RenderingAndGraphics/PostProcessEffects/UsingLUTs/index.html" target="_blank">Unreal Engine Docs</a> have a good description of how a 3D LUT can be used to perform color grading.
 
-Each input RGB color is used as XYZ coordinates for the color grading LUT. The texture uses linear filtering to interpolate between points on the LUT If every set of 3d texture coordinates (R,G,B)
-has an identical corresponding texture value of (R,G,B), the texture has no effect on the final image color. The <a href="https://docs.unrealengine.com/en-US/RenderingAndGraphics/PostProcessEffects/UsingLUTs/index.html" target="_blank">Unreal Engine Docs</a> have a good description of how a 3D LUT can be used to perform color grading.
+Each input RGB color is used as XYZ coordinates for the color grading LUT. For a 256x256x256 color grading LUT, determining the resulting pixel color is straightforward. Given an RGB color like (64,128,255), replace it with the color at position 64, 128, 255 in the LUT texture. A neutral LUT has a pixel color equal to the coordinates at every point in the LUT, so each input color maps to itself. If a neutral 3D LUT texture were a cube, it would have the colors black, red, green, blue, magenta, cyan, and white at the corners of the cube. 
+
+The in game LUTs, however, are only 16x16x16. Colors that don't have a corresponding point in the LUT get their color from a blend of nearby colors using linear filtering. The effect is similar to a gradient map or color ramp with 16 steps but in 3D. Color grading LUTs can't be used to perfectly recreate pixelated or cel shaded effects. Despite its small size, a 16x16x16 3D LUT can still accurately recreate a wide variety of image adjustments.
+
+The LUT applies to all models and effects on screen but not UI. More extreme LUTs may make it difficult to differentiate between certain moves and fighters. An entirely black LUT, for example, would produce a black screen with only the fighter portraits and other UI elements visible.
 
 ### Editing Color Grading LUTs
 <figure class="figure">
 <img src="{{ "/assets/images/post_processing/dreamland_lut.jpg" | relative_url }}" height="auto" width="auto">
     <figcaption class="figure-caption text-center">The result of editing the color_grading_lut.nutexb for Dreamland GB using a gradient map. The 16 slices of the LUT are displayed on the top of the image.</figcaption>
 </figure>
-A useful property of color grading LUTs is that any image editing operations that don't target individual pixels such as curves, levels, exposure, color balance, HSL, gradient maps, etc applied to the LUT will also apply to the final image. Simply apply the adjustments to a neutral color grading LUT and then save the result. A tool and instructions for creating color grading LUTs is available on the <a href="https://github.com/ScanMountGoat/Smush-LUT" target="_blank">Smush LUT Github repository</a>.
-
-### Limitations 
-The textures are only 16x16x16 and use linear filtering, so it's not possible to have a completely cel shaded look. The LUTs are similar to a gradient map or color ramp with 16 steps but in 3d. The final color is a blend of the nearest colors in the 16x16x16 grid of points. 
-
-The LUT applies to all models and effects on screen except for UI. A LUT with every pixel set to black will result in a black image with only the UI visible.  
+A useful property of color grading LUTs is that any image editing operations that don't target individual pixels such as curves, levels, exposure, color balance, HSL, gradient maps, etc applied to the LUT will also apply to the final image. Simply apply the adjustments to a neutral color grading LUT and then save the result. A tool for creating color grading LUTs is available on the <a href="https://github.com/ScanMountGoat/Smush-LUT" target="_blank">Smush LUT Github repository</a>.
 
 ## Post Processing Pass 
 <figure class="figure">
