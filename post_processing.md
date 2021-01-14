@@ -7,7 +7,7 @@
     }
 </style>
 
-# Post Processing
+# Post Processing Passes
 Smash Ultimate contains a few post processing steps that grealy impact the final look of the image after all the models and effects are rendered. Post processing does not affect the color of UI elements such as stock icons and character portraits.
 
 ## Bloom 
@@ -27,7 +27,7 @@ The graph below demonstrates the bloom intensity for different brightness values
     <img src="{{ "/assets/images/post_processing/neutral_lut.png" | relative_url }}" height="auto" width="100%" class="pixelated">
     <figcaption class="figure-caption text-center">A neutral color grading LUT. Each of the 16 layers are separated into indivudal 16x16 slices for display.</figcaption>
 </figure>
-Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the snapshot filters. The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The texture data is a 16x16x16 RGB cube where the eight corners of the cube correspond to black, red, green, blue, cyan, magenta, and white.  
+Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the [snapshot filters](snapshot). The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The texture data is a 16x16x16 RGB cube where the eight corners of the cube correspond to black, red, green, blue, cyan, magenta, and white.  
 
 Each input RGB color is used as XYZ coordinates for the color grading LUT. The texture uses linear filtering to interpolate between points on the LUT If every set of 3d texture coordinates (R,G,B)
 has an identical corresponding texture value of (R,G,B), the texture has no effect on the final image color. The <a href="https://docs.unrealengine.com/en-US/RenderingAndGraphics/PostProcessEffects/UsingLUTs/index.html" target="_blank">Unreal Engine Docs</a> have a good description of how a 3D LUT can be used to perform color grading.
