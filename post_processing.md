@@ -26,19 +26,22 @@ vec3 bloomColor = inputColor.rgb / componentMax * scale * 6.0;
 The graph below demonstrates the bloom intensity for different brightness values. The brightness threshold is roughly 75%, so any pixels with a brightness of 75% or higher will have some blooming. The graph only shows input values in the range 0.0 to 1.0, but its normal for models to have rendered brightness values much higher than 1.0 due to specular highlights, bright lighting, or certain material parameters.
 <img src="{{ "/assets/images/post_processing/bloom_threshold.png" | relative_url }}" height="auto" width="auto">
 
-
 ## Color Grading LUTs
-<figure class="figure col">
-    <img src="{{ "/assets/images/post_processing/neutral_lut.png" | relative_url }}" height="auto" width="100%" class="pixelated">
-    <figcaption class="figure-caption text-center">A neutral color grading LUT. Each of the 16 layers are separated into individual 16x16 slices for display.</figcaption>
-</figure>
-Each stage has a 3D <abbr title="Lookup Table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the [snapshot filters](snapshot). The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The <a href="https://docs.unrealengine.com/en-US/RenderingAndGraphics/PostProcessEffects/UsingLUTs/index.html" target="_blank">Unreal Engine Docs</a> have a good description of how a 3D LUT can be used to perform color grading.
+<div class="col-md-5">
+    <img class="img-fluid float-left" src="{{ "/assets/images/post_processing/color_lut3d.png" | relative_url }}" height="auto" width="auto">
+</div>
+The normal and battlefield forms for each stage have a 3D <abbr title="lookup table">LUT</abbr> texture to add color grading to the final rendered image. The same technique is used for the [snapshot filters](snapshot). The color grading LUT stores a transformation from the unedited colors to their corresponding edited colors. The <a href="https://docs.unrealengine.com/en-US/RenderingAndGraphics/PostProcessEffects/UsingLUTs/index.html" target="_blank">Unreal Engine Docs</a> have a good description of how a 3D LUT can be used to perform color grading.
 
-Each input RGB color is used as XYZ coordinates for the color grading LUT. For a 256x256x256 color grading LUT, determining the resulting pixel color is straightforward. Given an RGB color like (64,128,255), replace it with the color at position 64, 128, 255 in the LUT texture. A neutral LUT has a pixel color equal to the coordinates at every point in the LUT, so each input color maps to itself. If a neutral 3D LUT texture were a cube, it would have the colors black, red, green, blue, magenta, cyan, and white at the corners of the cube. 
+Each input RGB color is used as XYZ coordinates for the color grading LUT. For a 256x256x256 color grading LUT, determining the resulting pixel color is straightforward. Given an RGB color like (64,128,255), replace it with the color at position 64, 128, 255 in the LUT texture. A neutral LUT has a pixel color equal to the coordinates at every point in the LUT, so each input color maps to itself. The 3d plot shows the colors for a neutral LUT. The corners of the cube correspond to the colors black, red, green, blue, magenta, cyan, and white. 
 
 The in game LUTs, however, are only 16x16x16. Colors that don't have a corresponding point in the LUT get their color from a blend of nearby colors using linear filtering. The effect is similar to a gradient map or color ramp with 16 steps but in 3D. Color grading LUTs can't be used to perfectly recreate pixelated or cel shaded effects. Despite its small size, a 16x16x16 3D LUT can still accurately recreate a wide variety of image adjustments.
 
 The LUT applies to all models and effects on screen but not UI. More extreme LUTs may make it difficult to differentiate between certain moves and fighters. An entirely black LUT, for example, would produce a black screen with only the fighter portraits and other UI elements visible.
+
+<figure class="figure col">
+    <img class="pixelated" src="{{ "/assets/images/post_processing/neutral_lut.png" | relative_url }}" height="auto" width="100%">
+    <figcaption class="figure-caption text-center">The texture for the neutral color grading LUT above. Each of the 16 layers are separated into individual 16x16 slices for display.</figcaption>
+</figure>
 
 ### Editing Color Grading LUTs
 <figure class="figure">
