@@ -54,7 +54,7 @@ The parameters can also be tweaked for more stylized diffuse shading, such as ce
 
 ## Blending Intensity 
 The overall intensity of the effect is controlled by CustomVector30.x, which should have values between 0.0 and 1.0 to avoid artifacts. 
-The metalness map stored in the PRM red channel for skin materials doesn't make the material metallic and instead is used to mask the effect.
+Skin materials always have a metalness of 0. The metalness map stored in the PRM red channel instead acts like a mask for the skin shading effect.
 For full effect, both the metalness map and CustomVector30.x should be set to 1.0. 
 If either CustomVector30.x or the metalness map are 0.0, the material will use the default diffuse shading.
 
