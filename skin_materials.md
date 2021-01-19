@@ -60,7 +60,7 @@ If either CustomVector30.x or the metalness map are 0.0, the material will use t
 
 ```glsl
 // CustomVector30.x is the overall intensity.
-// Metalness acts like a "mask".
+// Metalness acts like a mask.
 float sssBlend = CustomVector30.x * metalness;
 ```
 
@@ -69,15 +69,11 @@ float sssBlend = CustomVector30.x * metalness;
     <img src="{{ "/assets/images/albedo/ivysaur_albedo.jpg" | relative_url }}" height="auto" width="auto">
     <figcaption class="figure-caption text-center">Ivysaur's col map (left), CustomVector11.rgb (center), and calculated albedo color (right)</figcaption>
 </figure>
-The RGB values for CustomVector11 control the subsurface color. This is typically a dark red color to approximate skin.
-Bright colors will likely cause unwanted bloom.
-The albedo color is calculated using the col map color as well as CustomVector11's color.
+The RGB values for CustomVector11 control the subsurface color. This is typically a dark red color to approximate skin. Bright colors will likely cause unwanted bloom.
 
 ```glsl
 // Blend the col map color with the subsurface color.
-// Note that CustomVector11 makes the albedo brighter.
 vec3 albedoFinal = mix(col.rgb, CustomVector11.rgb, sssBlend);
-albedoFinal += CustomVector11.rgb * sssBlend;
 ```
 
 ### Diffuse Shading
@@ -86,9 +82,9 @@ Using a very high value for the second value of CustomVector30 creates a cel-sha
 A very similar technique is used for Breath of the Wild's shaders, for example.
 
 ```glsl
-float skinShading = diffuseShading * CustomVector30.y;
+float skinShading = nDotL * CustomVector30.y * 0.5 + 0.5;
+skinShading = clamp(skinShading, 0.0, 1.0) ;
 float finalDiffuseShading = mix(nDotL, skinShading, sssBlend);
-finalDiffuseShading = clamp(finalDiffuseShading, 0.0, 1.0);
 ```
 
 The third and fourth parameters are unused, despite having values set for some models.
