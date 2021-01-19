@@ -93,9 +93,6 @@ finalDiffuseShading = clamp(finalDiffuseShading, 0.0, 1.0);
 
 The third and fourth parameters are unused, despite having values set for some models.
 
-
-
-
 <script type="module">
     import { SssDemo } from "./assets/javascript/skin_materials.js";
     import * as DataBinding from "./assets/javascript/databinding.js";

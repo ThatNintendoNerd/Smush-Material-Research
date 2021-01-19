@@ -31,22 +31,22 @@ class SssDemo {
                     float sssBlend = metalness * CustomVector30x;
 
                     // Adjust diffuse shading.
-                    float skinShading = nDotL;
-                    skinShading *= CustomVector30y;
-                    skinShading = skinShading * 0.5 + 0.5;
-                    float directShading = mix(nDotL, skinShading, sssBlend);
-                    directShading = clamp(directShading, 0.0, 1.0);
+                    float skinShading = nDotL * CustomVector30y;
+                    skinShading = clamp(skinShading * 0.5 + 0.5, 0.0, 1.0);
+                    vec3 skinFinal = CustomVector11.rgb * sssBlend * skinShading;
+
+                    vec3 direct = mix(nDotL * albedo.rgb, skinFinal, sssBlend);
 
                     // Adjust albedo.
                     vec3 albedoFinal = albedo.rgb;
                     albedoFinal = mix(albedoFinal, CustomVector11, sssBlend);
-                    albedoFinal += CustomVector11 * sssBlend;
+                    vec3 ambient = albedoFinal;
 
-                    float lighting = directShading + 0.5;
-                    vec3 result = albedoFinal * lighting;
-
+                    vec3 result = mix(direct, ambient, 0.5);
+                    
                     // Gamma correction.
                     result = pow(result, vec3(1.0 / 2.2));
+                    result.rgb *= 1.5;
                     gl_FragColor = vec4(result,1.0);
                 }`,
             uniforms: {
