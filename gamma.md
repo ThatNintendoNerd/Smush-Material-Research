@@ -57,7 +57,7 @@ The texture format must match the type of data stored in the texture for the tex
     <figcaption class="figure-caption text-center">The final rendered color for naive gamma fixing in an image editor (left) compared to saving the image as sRGB (right). 
         Note the artifacts in the shadows on the left image.</figcaption>
 </figure>
-The in game UI texture files use the unorm (linear) format and store already gamma corrected pixel intensities. This results in noticeable visual quality loss compared to using an sRGB formatThe blocky regions of identical pixel values are more easily compressed, so the final compressed file size is smaller. There is no change in the image file size before compression. UI textures should be saved using SRGB unless the compressed size needs to match the original file's compressed size. 
+The in game UI texture files use the unorm (linear) format and store already gamma corrected pixel intensities. This results in noticeable visual quality loss compared to using an sRGB format. The blocky regions of identical pixel values are more easily compressed, so the final compressed file size is smaller. There is no change in the image file size before compression. UI textures should be saved using SRGB unless the compressed size needs to match the original file's compressed size. 
 
 Avoid trying to "fix" the texture gamma manually in an image editor. The inverse sRGB adjustment applied before the final color is displayed on screen is not the same as 
 a gamma adjustment of (1.0 / 2.2), so the final color will not be correct if the texture was darkened using a gamma of 2.2 and saved as unorm. 
