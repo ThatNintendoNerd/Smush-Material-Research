@@ -49,9 +49,7 @@ The texture format must match the type of data stored in the texture for the tex
         </tr>
     </tbody>
 </table>
-<sup id="fn1">1. The in game chara UI files use a linear format and save the texture with manually darkened pixel values. This results in noticeable 
-quality loss compared to using an sRGB format. 
-</sup>
+<sup id="fn1">1. The in game chara UI files use a linear format and save the texture with manually darkened pixel values.</sup>
 
 ### Manual Gamma Correction Hacks
 <figure class="figure">
@@ -59,10 +57,11 @@ quality loss compared to using an sRGB format.
     <figcaption class="figure-caption text-center">The final rendered color for naive gamma fixing in an image editor (left) compared to saving the image as sRGB (right). 
         Note the artifacts in the shadows on the left image.</figcaption>
 </figure>
+The in game UI texture files use the unorm (linear) format and store already gamma corrected pixel intensities. This results in noticeable visual quality loss compared to using an sRGB formatThe blocky regions of identical pixel values are more easily compressed, so the final compressed file size is smaller. There is no change in the image file size before compression. UI textures should be saved using SRGB unless the compressed size needs to match the original file's compressed size. 
+
 Avoid trying to "fix" the texture gamma manually in an image editor. The inverse sRGB adjustment applied before the final color is displayed on screen is not the same as 
 a gamma adjustment of (1.0 / 2.2), so the final color will not be correct if the texture was darkened using a gamma of 2.2 and saved as unorm. 
-The result after applying a gamma or levels adjustment is still only stored using 8 bits per color channel, 
-which produces noticeable banding artifacts in game such as in the above image. The artifacts caused by manually gamma correcting textures but saving as a linear format is most noticeable in darker tones on compressed textures.
+The result after applying a gamma or levels adjustment is still only stored using 8 bits per color channel, which produces noticeable banding artifacts in game such as in the above image. The artifacts caused by manually gamma correcting textures but saving as a linear format is most noticeable in darker tones on compressed textures.
 Saving the texture using an sRGB format performs the correct gamma conversion using floating point and won't introduce any noticeable quality loss.  
 
 ## Texture Formats 
